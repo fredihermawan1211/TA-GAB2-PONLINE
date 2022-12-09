@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">PonlineApp</string>
+    <string name="logo">Logo Ponline</string>
+    <string name="Login">LOGIN</string>
+    <string name="Daftar">Daftar</string>
+    <string name="Lupa_Password">Lupa Password</string>
+    <string name="name">Tomi Andrean</string>
+    <string name="comunity">Kelompok Karya Bersama</string>
+    <string name="daftar">Daftar</string>
+</resources>
