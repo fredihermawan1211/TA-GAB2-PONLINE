@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.ponline.dao.Request.AnggotaRequest;
 import com.api.ponline.dao.Response.AbstractResponse;
+import com.api.ponline.dao.Response.ApiResponse;
 import com.api.ponline.model.Entity.komunitas.Anggota;
 import com.api.ponline.model.Entity.komunitas.Komunitas;
 import com.api.ponline.model.Entity.user.User;
@@ -88,6 +90,16 @@ public class AnggotaController {
         responseData.setPayLoad(anggotaServices.save(anggota));
         return ResponseEntity.ok(responseData);       
 
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ApiResponse deleteById(@PathVariable("id") Long id) {
+        ApiResponse response = new ApiResponse(false, "Data Gagal Di hapus");
+        if (anggotaServices.deleteById(id)) {
+            response.setSuccess(true);
+            response.setMessage("Data Berhasil Di hapus");
+        }
+        return response;
     }
 
     @GetMapping

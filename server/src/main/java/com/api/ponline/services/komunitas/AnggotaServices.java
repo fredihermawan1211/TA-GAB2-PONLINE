@@ -38,4 +38,22 @@ public class AnggotaServices{
     public List<Anggota> findByKomunitas(Komunitas komunitas){
         return anggotaRepo.findByKomunitas(komunitas);
     }
+
+    public Boolean deleteById(Long id) {
+        if (isExist(id)) {
+            anggotaRepo.deleteById(id);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public Boolean isExist(Long id) {
+        Anggota anggota = findOne(id);
+        if (anggota!=null) {
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

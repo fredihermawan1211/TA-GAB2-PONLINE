@@ -26,4 +26,22 @@ public class JadwalServices{
     public Iterable<Jadwal> findAll() {
         return jadwalRepo.findAll();
     }
+
+    public Boolean deleteById(Long id) {
+        if (isExist(id)) {
+            jadwalRepo.deleteById(id);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public Boolean isExist(Long id) {
+        Jadwal jadwal = findOne(id);
+        if (jadwal!=null) {
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
