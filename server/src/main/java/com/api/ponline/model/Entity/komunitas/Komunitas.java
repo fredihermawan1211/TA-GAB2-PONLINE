@@ -56,7 +56,4 @@ public class Komunitas implements Serializable{
     public void setAlamat(String alamat) {
         this.alamat = alamat;
     }
-
-    
-    
 }
