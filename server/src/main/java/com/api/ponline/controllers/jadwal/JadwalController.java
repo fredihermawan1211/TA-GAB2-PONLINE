@@ -23,30 +23,40 @@ import com.api.ponline.dao.Response.ApiResponse;
 import com.api.ponline.model.Entity.jadwal.Jadwal;
 import com.api.ponline.services.jadwal.JadwalServices;
 
+// Anotasi RESTController untuk menandakan bahwa ini kelas rest controller
 @RestController
+// Set base url endpoint (baseurl/jadwal)
 @RequestMapping("/jadwal")
 public class JadwalController {
 
+    // Inject komunitas service untuk memakai fungsi fungsi yg ada di kelas service
     @Autowired
     private JadwalServices jadwalServices;
     
+    // inject model mapper untuk memudahkan penyusunan data dari json yang di kirimkan frontend ke objek
     @Autowired
     private ModelMapper modelMapper;
 
+    // enspoin untuk menyimpan data
+    // anotasi untuk menandakan metode yang di gunakan adalah POST
     @PostMapping
     public ResponseEntity<AbstractResponse<Jadwal>> create(@Valid @RequestBody JadwalRequest jadwalRequest, Errors errors ) {
     
+        // Siapkan objek kosong untuk di kembalikan
         AbstractResponse<Jadwal> responseData = new AbstractResponse<>();
 
+        // periksa jika ada error
         if (errors.hasErrors()) {
             for (ObjectError error : errors.getAllErrors()) {
                 responseData.getMessages().add(error.getDefaultMessage());
             }
             responseData.setSuccess(false);
             responseData.setPayLoad(null);
+            // kembalikan AbstractResponse dengan pesan gagal dan kode error 500
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
         }
 
+        // jika tidak ada error, maka akan di kembalikan respon 200
         Jadwal jadwal = modelMapper.map(jadwalRequest, Jadwal.class);
         responseData.setSuccess(true);
         responseData.setPayLoad(jadwalServices.save(jadwal));
@@ -54,6 +64,8 @@ public class JadwalController {
 
     }
 
+    // buat endpoint untuk update, penjelasanya sama kaya simpan data hanya saja respon yang di terima sudah ada id objeknya
+    // buat metode PUT
     @PutMapping
     public ResponseEntity<AbstractResponse<Jadwal>> update(@Valid @RequestBody JadwalRequest jadwalRequest, Errors errors ) {
     
@@ -74,12 +86,17 @@ public class JadwalController {
         return ResponseEntity.ok(responseData);       
 
     }
-
+    
+    
+    // enpoind untuk membaca semua data
     @GetMapping
     public Iterable<Jadwal> findAll() {
         return jadwalServices.findAll();
     }
     
+    // Endpoitn delete
+    // metode DELETE
+    // id di baca dari url
     @DeleteMapping("/delete/{id}")
     public ApiResponse deleteById(@PathVariable("id") Long id) {
         ApiResponse response = new ApiResponse(false, "Data Gagal Di hapus");

@@ -28,34 +28,45 @@ import com.api.ponline.model.repository.user.UserRepository;
 import com.api.ponline.services.komunitas.AnggotaServices;
 import com.api.ponline.services.komunitas.KomunitasServices;
 
+// Anotasi RESTController untuk menandakan bahwa ini kelas rest controller
 @RestController
+// Set base url endpoint (baseurl/anggota)
 @RequestMapping("/anggota")
 public class AnggotaController {
 
+    // Inject anggota service untuk memakai fungsi fungsi yg ada di kelas service
     @Autowired
     private AnggotaServices anggotaServices;
 
+    // Inject komunitas service untuk memakai fungsi fungsi yg ada di kelas service
     @Autowired
     private KomunitasServices komunitasServices;
 
+    // Inject user service untuk memakai fungsi fungsi yg ada di kelas service
     @Autowired
     private UserRepository userRepository;
     
-
+    // enspoin untuk menyimpan data
+    // anotasi untuk menandakan metode yang di gunakan adalah POST
     @PostMapping
     public ResponseEntity<AbstractResponse<Anggota>> create(@Valid @RequestBody AnggotaRequest anggotaRequest, Errors errors ) {
-    
+        
+        // Siapkan objek kosong untuk di kembalikan
         AbstractResponse<Anggota> responseData = new AbstractResponse<>();
 
+        // periksa jika ada error
         if (errors.hasErrors()) {
             for (ObjectError error : errors.getAllErrors()) {
                 responseData.getMessages().add(error.getDefaultMessage());
             }
             responseData.setSuccess(false);
             responseData.setPayLoad(null);
+
+            // kembalikan AbstractResponse dengan pesan gagal dan kode error 500
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
         }
 
+        // jika tidak ada error, maka akan di kembalikan respon 200
         Komunitas komunitas = komunitasServices.findOne(anggotaRequest.getKomunitas().getId());
         User user = userRepository.findOneById(anggotaRequest.getUser().getId());
         Anggota anggota = new Anggota();
@@ -67,6 +78,8 @@ public class AnggotaController {
 
     }
 
+    // buat endpoint untuk update, penjelasanya sama kaya simpan data hanya saja respon yang di terima sudah ada id objeknya
+    // buat metode PUT
     @PutMapping
     public ResponseEntity<AbstractResponse<Anggota>> upsate(@Valid @RequestBody AnggotaRequest anggotaRequest, Errors errors ) {
     
@@ -92,26 +105,36 @@ public class AnggotaController {
 
     }
 
+    // Endpoitn delete
+    // metode DELETE
+    // id di baca dari url
     @DeleteMapping("/delete/{id}")
     public ApiResponse deleteById(@PathVariable("id") Long id) {
+
+        // Buat respon gagal
         ApiResponse response = new ApiResponse(false, "Data Gagal Di hapus");
         if (anggotaServices.deleteById(id)) {
+            // update respon menjadi berhasil
             response.setSuccess(true);
             response.setMessage("Data Berhasil Di hapus");
         }
+        // kembalikan respon
         return response;
     }
 
+    // enpoind untuk membaca semua data
     @GetMapping
     public Iterable<Anggota> findAll() {
         return anggotaServices.findAll();
     }
 
+    // endpoin untuk mencari data berdasarkan user
     @GetMapping("/find/user/{user}")
     public List<Anggota> findByUser(@PathVariable("user") User user) {
         return anggotaServices.findByUser(user);
     }
 
+    // endpoin untuk mencari data berdasarkan komunitas
     @GetMapping("/find/komunitas/{komunitas}")
     public List<Anggota> findByKomunitas(@PathVariable("komunitas") Komunitas komunitas) {
         return anggotaServices.findByKomunitas(komunitas);
