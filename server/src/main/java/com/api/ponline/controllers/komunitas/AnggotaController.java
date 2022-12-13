@@ -97,6 +97,7 @@ public class AnggotaController {
         Komunitas komunitas = komunitasServices.findOne(anggotaRequest.getKomunitas().getId());
         User user = userRepository.findOneById(anggotaRequest.getUser().getId());
         Anggota anggota = new Anggota();
+        anggota.setId(anggotaRequest.getId());
         anggota.setKomunitas(komunitas);
         anggota.setUser(user);
         responseData.setSuccess(true);
