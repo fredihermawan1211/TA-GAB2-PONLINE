@@ -40,7 +40,8 @@ fun MainScreen() {
             ConfirmPassword(navController = navController, email)
         }
         composable(RouteNav.Dashboard.route){
-            PageTest(navController = navController)
+//            PageTest(navController = navController)
+            PageTest() //fortestpreview
         }
 
         
