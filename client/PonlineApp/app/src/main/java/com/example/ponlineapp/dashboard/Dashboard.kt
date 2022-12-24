@@ -20,7 +20,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,7 +31,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.ponlineapp.R
 import com.example.ponlineapp.login.BackgroundImage
 import com.example.ponlineapp.login.Loginform
-import com.example.ponlineapp.models.RouteNav
+import com.example.ponlineapp.navigation.RouteNav
 
 //@Preview()
 @Composable
@@ -66,9 +65,9 @@ fun NavHostContainer(
             composable("profile") {
                 Page2Screen(navController)
             }
-            composable("Login"){
-                Loginform(navController)
-            }
+//            composable("Login"){
+//                Loginform(navController)
+//            }
         })
 
 }
@@ -244,7 +243,7 @@ fun Page2Screen(navHostController: NavHostController) {
 }
 
 @Composable()
-fun PageTest(navController: NavHostController) {
+fun Home(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
