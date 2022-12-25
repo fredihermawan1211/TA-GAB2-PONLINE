@@ -40,8 +40,8 @@ import net.bytebuddy.utility.RandomString;
 
 // REST CONTROLLER API AUTHENTIFIKASI
 @RestController
-@RequestMapping("/auth")
-public class AuthController {
+@RequestMapping("/authentication")
+public class AuthenticationController {
 
     // AuthenticationManager => untuk manajemen autentifikasi
     @Autowired
@@ -61,7 +61,7 @@ public class AuthController {
     
     private PonTools ponTools;
     
-    public AuthController(){
+    public AuthenticationController(){
         this.ponTools = new PonTools();
     }
     
