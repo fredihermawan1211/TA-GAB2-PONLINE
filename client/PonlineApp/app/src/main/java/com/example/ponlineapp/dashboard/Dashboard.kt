@@ -4,9 +4,11 @@ package com.example.ponlineapp.dashboard
 import android.annotation.SuppressLint
 import android.util.DisplayMetrics
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,6 +23,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
@@ -28,11 +31,14 @@ import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -90,8 +96,8 @@ fun NavHostContainer(
                 Loginform(navController)
 //                Loginform()
             }
-        })
-
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -123,7 +129,7 @@ fun HomeAppBar(
         navigationIcon =  {
             Box {
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
-                    androidx.compose.material3.IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = { /*TODO*/ }) {
                         Image(
                             painter = painterResource(R.drawable.ic_account),
                             contentDescription = null
@@ -136,7 +142,6 @@ fun HomeAppBar(
         colors = topAppBarColors,
         modifier = modifier
     )
-
 }
 
 
@@ -190,18 +195,81 @@ fun BottomNavigationBar(
         }
     }
 }
-//Bandge style size
+
+@Preview
+@Composable
+fun itinerary_card(
+    modifier: Modifier = Modifier
+){
+    val context = LocalContext.current
+    val interactionSource = remember {
+        MutableInteractionSource()
+    }
+    Card(
+        elevation = CardDefaults.cardElevation(2.dp),
+//        elevation = 2.dp,
+        shape = RoundedCornerShape(10.dp),
+        colors = CardDefaults.cardColors(colorResource(id = R.color.secondary)),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(15.dp)
+    )    {
+        Column(
+            modifier = Modifier
+//                .fillMaxSize()
+                .padding(16.dp)
+                .background(Color.Transparent)
+//                .windowInsetsPadding(
+//                    WindowInsets.systemBars.only(WindowInsetsSides.Horizontal)
+//                )
+                ,
+            // Parameters set to place the items in center
+//            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(
+                text = "Jadwal",
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                .fillMaxWidth()
+            ) {
+                Text(text = "Mon, Aug 17",style = MaterialTheme.typography.displayMedium)
+                IconButton(onClick = {
+                    Toast.makeText(context,"点击了添加",Toast.LENGTH_SHORT).show()
+                },modifier = Modifier
+                    .size(40.dp, 40.dp)
+                    .clip(CircleShape)
+                    .background(Color.Black),
+                    enabled = true,
+                    interactionSource = interactionSource,) {
+
+                    Icon(imageVector = Icons.Filled.Edit,
+                        contentDescription = "Edit",
+                        tint = Color.White)
+                }
+            }
+
+
+        }
+    }
+
+}
+
+//Badge style size
 fun Modifier.badgeLayout() =
-    layout {measurable, constraints ->
+    layout {
+            measurable, constraints ->
         val placeable = measurable.measure(constraints)
-
         val minPadding = placeable.height / 4
-
         val width = maxOf(placeable.width + minPadding, placeable.height)
         layout(width, placeable.height) {
             placeable.place((width - placeable.width) / 2, 0)
         }
     }
+
 
 
 //@Preview(showBackground = true)
@@ -219,13 +287,12 @@ fun HomeScreen(){
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Card(
-            elevation = CardDefaults.cardElevation(),
+            elevation = CardDefaults.cardElevation(5.dp),
             shape = RoundedCornerShape(10.dp),
-            colors = CardDefaults.cardColors(colorResource(id = R.color.secondary)),
+            colors = CardDefaults.cardColors(colorResource(id = R.color.blue_f)),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(30.dp),
-
+                .padding(15.dp),
         ) {
             Row(modifier = Modifier
                 .padding(16.dp)
@@ -235,7 +302,7 @@ fun HomeScreen(){
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
-                    androidx.compose.material3.Text(
+                    Text(
                         text = stringResource(
                             id = R.string.comunity
                         ),
@@ -249,7 +316,7 @@ fun HomeScreen(){
                     Box(contentAlignment = Alignment.CenterStart,modifier = Modifier
                         .padding(5.dp, 0.dp, 5.dp, 5.dp)
                         .background(
-                            colorResource(id = R.color.blue_80),
+                            colorResource(id = R.color.secondary),
                             shape = RoundedCornerShape(20.dp)
                         )){
                         Row(
@@ -276,7 +343,7 @@ fun HomeScreen(){
                     Box(contentAlignment = Alignment.CenterStart,modifier = Modifier
                         .padding(5.dp, 5.dp, 5.dp, 0.dp)
                         .background(
-                            colorResource(id = R.color.blue_80),
+                            colorResource(id = R.color.secondary),
                             shape = RoundedCornerShape(20.dp)
                         )){
                         Row(
@@ -302,10 +369,11 @@ fun HomeScreen(){
                     }
                 }
             }
-
         }
+        itinerary_card()
     }
 }
+
 
 //@Preview()
 @Composable
@@ -348,7 +416,6 @@ fun Page2Screen(navHostController: NavHostController) {
         // Text to Display the current Screen
         Text(text = "Profile", color = Color.Black)
         Spacer(modifier = Modifier.height(20.dp))
-
         Button(
             onClick = { navHostController.navigate(RouteNav.Login.route) },
             modifier = Modifier
@@ -356,12 +423,10 @@ fun Page2Screen(navHostController: NavHostController) {
                 .width(150.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red),
             elevation = ButtonDefaults.elevation(defaultElevation = 10.dp),
-
             ) {
             Text(text = "Keluar", fontWeight = FontWeight.Bold, color = Color.White)
         }
     }
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -418,6 +483,7 @@ fun PageTest(){
         }
     }
 }
+
 
 //class MainActivity : ComponentActivity() {
 //    override fun onCreate(savedInstanceState: Bundle?) {
