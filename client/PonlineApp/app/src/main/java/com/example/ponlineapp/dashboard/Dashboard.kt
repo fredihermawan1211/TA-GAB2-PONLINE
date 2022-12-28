@@ -16,6 +16,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Alignment
@@ -83,7 +84,6 @@ fun NavHostContainer(
 
             // route : Home
             composable("home") {
-                HomeScreen(navController)
             }
 
             // route : search
@@ -205,54 +205,62 @@ fun BottomNavigationBar(
 fun itinerary_card(
     modifier: Modifier = Modifier
 ){
+    var comparator by remember { mutableStateOf(DayComparator) }
     val context = LocalContext.current
     val interactionSource = remember {
         MutableInteractionSource()
     }
-    Card(
-        elevation = CardDefaults.cardElevation(2.dp),
+    LazyColumn(
+        Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+            val sortedList = ItineraryList.sortedWith(comparator)
+            items(sortedList, key = { it.day})
+        {
+            Card(
+                elevation = CardDefaults.cardElevation(2.dp),
 //        elevation = 2.dp,
-        shape = RoundedCornerShape(10.dp),
-        colors = CardDefaults.cardColors(colorResource(id = R.color.secondary)),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(15.dp)
-    )    {
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .background(Color.Transparent),
-        ) {
-            Text(
-                text = "Jadwal",
-                style = MaterialTheme.typography.bodyMedium
-            )
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
+                shape = RoundedCornerShape(10.dp),
+                colors = CardDefaults.cardColors(colorResource(id = R.color.secondary)),
                 modifier = Modifier
-                .fillMaxWidth()
-            ) {
-                Text(text = "Mon, Aug 17",style = MaterialTheme.typography.displayMedium)
-                IconButton(onClick = {
-                    Toast.makeText(context,"点击了添加",Toast.LENGTH_SHORT).show()
-                },modifier = Modifier
-                    .size(40.dp, 40.dp)
-                    .clip(CircleShape)
-                    .background(Color.Black),
-                    enabled = true,
-                    interactionSource = interactionSource,) {
+                    .fillMaxWidth()
+                    .padding(15.dp)
+            )    {
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .background(Color.Transparent),
+                ) {
+                    Text(
+                        text = "Jadwal",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Text(text = it.day +" "+ it.date +" "+ it.month,
+                            style = MaterialTheme.typography.displayMedium)
+                        IconButton(onClick = {
+                            Toast.makeText(context,"Test Toast",Toast.LENGTH_SHORT).show()
+                        },modifier = Modifier
+                            .size(40.dp, 40.dp)
+                            .clip(CircleShape)
+                            .background(Color.Black),
+                            enabled = true,
+                            interactionSource = interactionSource,) {
 
-                    Icon(imageVector = Icons.Filled.Edit,
-                        contentDescription = "Edit",
-                        tint = Color.White)
+                            Icon(imageVector = Icons.Filled.Edit,
+                                contentDescription = "Edit",
+                                tint = Color.White)
+                        }
+                    }
                 }
             }
-
-
         }
     }
-
 }
 
 //Badge style size
@@ -267,16 +275,11 @@ fun Modifier.badgeLayout() =
         }
     }
 
-
-
-//@Preview(showBackground = true)
+@Preview(showBackground = true)
 @OptIn(ExperimentalFoundationApi::class)
 //@Preview( showBackground = true,showSystemUi = true)
 @Composable
-fun HomeScreen(
-//    State Comparator
-//    comparator: Remem,
-    navHostController: NavHostController){
+fun HomeScreen(){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -371,22 +374,11 @@ fun HomeScreen(
                 }
             }
         }
-
-//        Problem How to set state comparator
-        LazyColumn(
-            Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-//            val sortedList = ItineraryList.sortedWith(remember)
-//            items(sortedList, key = { it.Day})
-                    {
-
-            }
-        }
+        itinerary_card()
     }
 }
 private val DayComparator = Comparator<ItineraryDay> { left, right ->
-    left.day.compareTo(right.day)
+    left.date.compareTo(right.date)
 }
 
 //Fake Date
