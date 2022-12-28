@@ -9,14 +9,9 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/documentation")
 public class DocumentationController {
     
-    @GetMapping("/users")
-    public RedirectView users() {
-        return new RedirectView("/documentation/index.html");
-    }
-
     @GetMapping()
-    public String welcome() {
-        return "Welcome to documentation API PONLINE";
+    public RedirectView home() {
+        return new RedirectView("/documentation/index.html");
     }
     
 }

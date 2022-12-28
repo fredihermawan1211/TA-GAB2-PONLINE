@@ -100,12 +100,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.jpg",
                         "/**/*.html",
                         "/**/*.css",
+                        "/**/*.pdf",
                         "/**/*.js")
                         .permitAll()
-                    .antMatchers("/auth/**", "/oauth2/**", "/documentation/**")
+                    .antMatchers("/authentication/**", "/oauth2/**", "/documentation/**")
                         .permitAll()
                     .antMatchers("/komunitas/**", "/anggota/**", "/kolam/**", "/jadwal/**")
                         .hasAnyAuthority("ROLE_OWNER", "ROLE_EMPLOYEE", "ROLE_PQOWNEDRETVY")
+                    .antMatchers("/anggota//update/**")
+                        .hasAnyAuthority("ROLE_OWNER", "ROLE_PQOWNEDRETVY")
                     .anyRequest()
                         .authenticated()
                     .and()
