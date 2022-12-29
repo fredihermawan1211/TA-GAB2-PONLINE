@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">PonlineApp</string>
+    <string name="logo">Logo Ponline</string>
+    <string name="Login">LOGIN</string>
+    <string name="Daftar">Daftar</string>
+    <string name="Lupa_Password">Lupa Password</string>
+    <string name="name">Tomi Andrean</string>
+    <string name="comunity">Kelompok Karya Bersama</string>
+    <string name="daftar">Daftar</string>
+    <string name="verifikasi">Verifikasi Email</string>
+    <string name="anggota">Anggota</string>
+    <string name="kolam">Kolam</string>
+    <string name="Jumlah_Anggota">10</string>
+    <string name="Jumlah_Kolam">4</string>
+</resources>
