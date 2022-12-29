@@ -1,6 +1,7 @@
 package com.example.ponlineapp.login
 
 import android.annotation.SuppressLint
+import android.util.Patterns
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,6 +37,7 @@ import com.example.ponlineapp.R
 import com.example.ponlineapp.login.components.ErrorImageAuth
 import com.example.ponlineapp.login.components.ProgressBarLoading
 import com.example.ponlineapp.navigation.RouteNav
+import java.util.regex.Pattern
 
 @Composable
 fun BackgroundImage()
@@ -62,7 +64,6 @@ fun TopBarLogin(){
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun Loginform(navController: NavHostController,
-              modifier: Modifier = Modifier,
               loadingProgressBar: Boolean,
               onclickLogin: (email: String, password: String) -> Unit,
               imageError: Boolean
@@ -71,7 +72,7 @@ fun Loginform(navController: NavHostController,
     //deklarasi Variabel
     var email by rememberSaveable { mutableStateOf(value = "") }
     var password by rememberSaveable { mutableStateOf(value = "") }
-    val isValidate by derivedStateOf { email.isNotBlank() && password.isNotBlank() }
+//    val isValidate by derivedStateOf { email.isNotBlank() && password.isNotBlank() }
     val focusManager = LocalFocusManager.current
     // Creating a variable to store toggle state
     var passwordVisible by remember { mutableStateOf(false) }
@@ -96,8 +97,8 @@ fun Loginform(navController: NavHostController,
                 {
                     TextField(
                         value = email,
-                        onValueChange = { email = it },
-                        placeholder = { Text("Masukkan Email") },
+                        onValueChange = { email = it},
+                        placeholder = { Text(text = "Masukkan Email") },
                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(15.dp),
@@ -113,7 +114,6 @@ fun Loginform(navController: NavHostController,
 
                         ),
                         singleLine = true,
-
                         )
                 }
             }
@@ -162,12 +162,12 @@ fun Loginform(navController: NavHostController,
                 {
                     Text(text = "Lupa Password??")
                     TextButton(onClick = { navController.navigate(RouteNav.ForgotPassword.route) }) {
-                        Text(text = "Klk Disini", fontWeight = FontWeight.Bold, color = colorResource(R.color.blue_100))
+                        Text(text = "Klik Disini", fontWeight = FontWeight.Bold, color = colorResource(R.color.blue_100))
                     }
                 }
 
                 Button( onClick = { onclickLogin(email, password)},
-                    enabled = isValidate,
+//                    enabled = isValidate,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 10.dp),

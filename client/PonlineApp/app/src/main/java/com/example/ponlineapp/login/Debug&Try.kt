@@ -1,210 +1,140 @@
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
+import android.util.Patterns
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.toolingGraphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.role
-import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.ponlineapp.R
+import com.example.ponlineapp.login.BackgroundImage
+import com.example.ponlineapp.login.TopBarLogin
+import com.example.ponlineapp.login.components.ErrorImageAuth
+import com.example.ponlineapp.login.components.ProgressBarLoading
+import com.example.ponlineapp.navigation.RouteNav
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-
-            // Creating a Simple Scaffold 
-            // Layout for the application
-            Scaffold(
-
-                // Creating a Top Bar
-                topBar = { TopAppBar(title = { Text("GFG | Toggle Password", color = Color.White) }, backgroundColor = Color(0xff0f9d58)) },
-
-                // Creating Content
-                content = {
-
-                    // Creating a Column Layout
-                    Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-
-                        // Creating a variable to store password
-                        var password by remember { mutableStateOf("") }
-
-                        // Creating a variable to store toggle state
-                        var passwordVisible by remember { mutableStateOf(false) }
-
-                        // Create a Text Field for giving password input
-                        TextField(
-                            value = password,
-                            onValueChange = { password = it },
-                            label = { Text("Password") },
-                            singleLine = true,
-                            placeholder = { Text("Password") },
-                            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                            trailingIcon = {
-                                val image = if (passwordVisible)
-                                    Icons.Filled.Visibility
-                                else Icons.Filled.VisibilityOff
-
-                                // Localized description for accessibility services
-                                val description = if (passwordVisible) "Hide password" else "Show password"
-
-                                // Toggle button to hide or display password
-                                IconButton(onClick = {passwordVisible = !passwordVisible}){
-                                    Icon(imageVector  = image, description)
-                                }
-                            }
-                        )
-
-                    }
-                }
-            )
-        }
-    }
-}
-
-//@Preview(showBackground = true)
 //@Composable
-//fun Test()
-//{
-//    var password by remember { mutableStateOf("") }
+//fun testingsupport() {
+//
+//    //form
+//    //deklarasi Variabel
+//    var email by remember { mutableStateOf(value = "") }
+//    var password by remember { mutableStateOf(value = "") }
+////    val isValidate by derivedStateOf { email.isNotBlank() && password.isNotBlank() }
+//    val isErroremail by remember {
+//        derivedStateOf {
+//            if (email.isEmpty()){
+//                false
+//            } else {
+//                Patterns.EMAIL_ADDRESS.matcher(email).matches().not()
+//            }
+//        } }
+//    val focusManager = LocalFocusManager.current
 //    // Creating a variable to store toggle state
 //    var passwordVisible by remember { mutableStateOf(false) }
-//    Column(modifier = Modifier
-//        .fillMaxSize()
-//        .padding(top = 10.dp)) {
-//        Card(elevation = 5.dp, modifier = Modifier.padding(horizontal = 10.dp))
+//
+//    Box {
+//        BackgroundImage()
+//
+//        Column(
+//            horizontalAlignment = Alignment.Start,
+//            modifier = Modifier
+//                .padding(start = 15.dp, end = 15.dp)
+//                .fillMaxSize()
+//        )
 //        {
-//            Column() {
-//                TextField(
-//                    value = password,
-//                    onValueChange = { password = it },
-//                    placeholder = { androidx.compose.material3.Text("Masukkan Password", color = Color.Gray) },
-//                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-//                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-//                    modifier = Modifier .fillMaxWidth(),
-//                    shape = RoundedCornerShape(15.dp),
-//                    colors = TextFieldDefaults.textFieldColors
-//                        (
-//                        backgroundColor = Color.White,
-//                        textColor = Color.Gray,
-//                        disabledTextColor = Color.Transparent,
-//                        unfocusedIndicatorColor = Color.Transparent,
-//                        focusedIndicatorColor = Color.Transparent
+//            Column(modifier = Modifier.fillMaxWidth())
+//            {
 //
-//                    ),
-//                    trailingIcon = {
-//                        val image = if (passwordVisible)
-//                            Icons.Filled.Visibility
-//                        else Icons.Filled.VisibilityOff
-//
-//                        // Localized description for accessibility services
-//                        val description = if (passwordVisible) "Hide password" else "Show password"
-//
-//                        // Toggle button to hide or display password
-//                        IconButton(onClick = {passwordVisible = !passwordVisible}){
-//                            Icon(imageVector  = image, description)
-//                        }
-//                    }
+//                //form untuk login
+//                Text(
+//                    text = "E-Mail",
+//                    fontWeight = FontWeight.Bold,
+//                    fontSize = 16.sp,
+//                    modifier = Modifier.padding(top = 10.dp)
 //                )
+//                Column()
+//                {
+//                    OutlinedTextField(
+//                        value = email,
+//                        onValueChange = { email = it },
+//                        placeholder = { Text(text = "Masukkan Email") },
+//                        supportingtext = {
+//                            if (isErroremail) {
+//                                Text(text = "Masukkan Email dengan benar")
+//                            }
+//                        },
+//                        isError = isErroremail,
+//                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+//                        modifier = Modifier.fillMaxWidth(),
+//                        shape = RoundedCornerShape(15.dp),
+//                        colors = TextFieldDefaults.textFieldColors
+//                            (
+//                            backgroundColor = Color.White,
+//                            textColor = Color.Gray,
+//                            //untuk menghilangkan underline
+//                            disabledTextColor = Color.Transparent,
+//                            focusedIndicatorColor = Color.Transparent,
+//                            unfocusedIndicatorColor = Color.Transparent,
+//                            disabledIndicatorColor = Color.Transparent
+//
+//                        ),
+//                        singleLine = true,
+//                    )
+//                }
 //            }
-//
 //        }
-//
 //    }
-//
 //}
+
 
 @Preview(showBackground = true)
 @Composable
-fun Test2(){
-    Column(Modifier.fillMaxSize()) {
-        Card(modifier = Modifier.padding(50.dp), elevation = 10.dp) {
-            Testbed()
-        }
-    }
-}
+fun test2() {
+    var text by rememberSaveable { mutableStateOf("") }
+    var isError by rememberSaveable { mutableStateOf(false) }
 
-@Composable
-fun Icon(
-    painter: Painter,
-    contentDescription: String?,
-    modifier: Modifier = Modifier,
-    tint: Color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
-) {
-    // TODO: b/149735981 semantics for content description
-    val colorFilter = if (tint == Color.Unspecified) null else ColorFilter.tint(tint)
-    val semantics = if (contentDescription != null) {
-        Modifier.semantics {
-            this.contentDescription = contentDescription
-            this.role = Role.Image
-        }
-    } else {
-        Modifier
-    }
-    Box(
-        modifier
-            .toolingGraphicsLayer()
-            .defaultSizeFor(painter)
-            .paint(
-                painter,
-                colorFilter = colorFilter,
-                contentScale = ContentScale.Fit
+    Column(modifier = Modifier .fillMaxSize()) {
+        TextField(
+            value = text,
+            onValueChange = {
+                text = it
+                isError = false
+            },
+            trailingIcon = {
+                if (isError)
+                    Icon(Icons.Filled.Info, "Error", tint = Color.White)
+            },
+            singleLine = true,
+            isError = isError,
+//            keyboardActions = KeyboardActions { validate(text) },
+        )
+        if (isError) {
+            Text(
+                text = "Error message",
+                modifier = Modifier.padding(start = 16.dp)
             )
-            .then(semantics)
-    )
-}
-
-private fun Modifier.defaultSizeFor(painter: Painter) =
-    this.then(
-        if (painter.intrinsicSize == Size.Unspecified || painter.intrinsicSize.isInfinite()) {
-            DefaultIconSizeModifier
-        } else {
-            Modifier
         }
-    )
-
-private fun Size.isInfinite() = width.isInfinite() && height.isInfinite()
-
-// Default icon size, for icons with no intrinsic size information
-private val DefaultIconSizeModifier = Modifier.size(24.dp)
-
-@Composable
-fun Testbed(tint: Color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current)){
-    Column() {
-        Icon(painter = painterResource(R.drawable.logo_ponline),
-            contentDescription = stringResource(id = R.string.logo),
-            tint = tint)
-        Image(painter = painterResource(id = R.drawable.ic_logo),
-            contentDescription = stringResource(id = R.string.logo),
-            contentScale = ContentScale.Inside,
-            modifier = Modifier.padding(top = 2.dp).height(350.dp).width(350.dp))
     }
-
 }
-
-
-

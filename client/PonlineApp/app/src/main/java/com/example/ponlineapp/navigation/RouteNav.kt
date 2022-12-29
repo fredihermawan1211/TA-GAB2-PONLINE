@@ -9,9 +9,12 @@ sealed class RouteNav(val route: String)
     object Dashboard : RouteNav("Dashboard")
     object SplashScreen : RouteNav("SplashScreen")
     object  Home : RouteNav("Home")
+    object Verify : RouteNav("Verify")
+    object NavigationScreen : RouteNav("NavigationLogin")
 
     companion object{
-        fun getStartDestination() = Login.route
+        fun getStartDestination(): String = Login.route
+
     }
 }
 

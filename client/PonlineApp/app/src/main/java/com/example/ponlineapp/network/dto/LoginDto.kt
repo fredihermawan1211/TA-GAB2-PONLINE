@@ -7,3 +7,9 @@ class LoginDto(
     @SerializedName("password") val password: String
 )
 
+class Register(
+    @SerializedName("name") val nama: String,
+    @SerializedName("email") val email: String,
+    @SerializedName("password") val password: String
+)
+
