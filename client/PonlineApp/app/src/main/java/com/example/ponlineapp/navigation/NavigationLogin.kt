@@ -1,5 +1,7 @@
 package com.example.ponlineapp.login
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.tooling.preview.Preview
@@ -7,9 +9,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.ponlineapp.dashboard.Home
+import com.example.ponlineapp.dashboard.HomeScreen
+import com.example.ponlineapp.dashboard.NavHostContainer
 import com.example.ponlineapp.navigation.RouteNav
 import com.example.ponlineapp.viewModel.LoginViewModel
+import java.lang.reflect.Modifier
 
 
 @Composable
@@ -69,7 +73,7 @@ fun NavigationScreen(viewModel: LoginViewModel) {
             ConfirmPassword(navController = navController, email)
         }
         composable(RouteNav.Home.route){
-            Home(navController = navController)
+            HomeScreen(navController = navController)
         }
         composable(RouteNav.Verify.route){
             verifyPage(navController = navController)
