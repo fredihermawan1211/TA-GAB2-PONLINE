@@ -1,4 +1,4 @@
-package com.example.ponlineapp.models
+package com.example.ponlineapp.navigation
 
 sealed class RouteNav(val route: String)
 {
@@ -8,6 +8,10 @@ sealed class RouteNav(val route: String)
     object ConfirmPassword : RouteNav("ConfirmPassword")
     object Dashboard : RouteNav("Dashboard")
     object SplashScreen : RouteNav("SplashScreen")
+    object  Home : RouteNav("Home")
 
+    companion object{
+        fun getStartDestination() = Login.route
+    }
 }
 

@@ -4,6 +4,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -16,13 +19,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.ponlineapp.R
-import com.example.ponlineapp.models.RouteNav
+import com.example.ponlineapp.navigation.RouteNav
 
 
 @Composable
@@ -79,7 +85,9 @@ fun ForgotPassword(navController: NavHostController)
                     value = emailforgot,
                     onValueChange = { onUserNameChange(it) },
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                    modifier = Modifier.fillMaxWidth().shadow(elevation = 15.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .shadow(elevation = 15.dp),
                     shape = RoundedCornerShape(15.dp),
                     placeholder = { Text("Masukkan Email") },
                     colors = TextFieldDefaults.textFieldColors
@@ -185,108 +193,114 @@ fun Testingapp(){
     ForgotPassword(navController = navController)
 }
 
-//
-//@Composable
-//fun CreateNewPassword()
-//{
-//    var password by remember { mutableStateOf("") }
-//    var confirmPassword by remember { mutableStateOf("") }
-//    var passwordVisible by remember { mutableStateOf(false) }
-//    Box{
-//        BackgroundImage()
-//        Column(modifier = Modifier
-//            .fillMaxSize()
-//            .padding(start = 20.dp, top = 30.dp, end = 20.dp),
-//            verticalArrangement = Arrangement.spacedBy(10.dp)) {
-//            Text(text = "Buat Password Baru",
-////             style = MaterialTheme.typography.bodyLarge
-//                fontSize = 28. sp,
-//                fontFamily = FontFamily.SansSerif,
-//                fontWeight = FontWeight.Bold)
-//
-//            Card(elevation = 5.dp) {
-//                TextField(
-//                    value = password,
-//                    onValueChange = { password = it },
-//                    placeholder = { Text("Masukkan Password", color = Color.Gray) },
-//                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-//                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-//                    modifier = Modifier .fillMaxWidth(),
-//                    shape = RoundedCornerShape(15.dp),
-//                    colors = TextFieldDefaults.textFieldColors
-//                        (
-//                        backgroundColor = Color.White,
-//                        textColor = Color.Gray,
-//                        disabledTextColor = Color.Transparent,
-//                        unfocusedIndicatorColor = Color.Transparent,
-//                        focusedIndicatorColor = Color.Transparent
-//
-//                    ),
-//                    trailingIcon = {
-//                        val image = if (passwordVisible)
-//                            Icons.Filled.Visibility
-//                        else Icons.Filled.VisibilityOff
-//
-//                        // Localized description for accessibility services
-//                        val description = if (passwordVisible) "Hide password" else "Show password"
-//
-//                        // Toggle button to hide or display password
-//                        IconButton(onClick = {passwordVisible = !passwordVisible}){
-//                            Icon(imageVector  = image, description)
-//                        }
-//                    }
-//                )
-//            }
-//
-//            Card(elevation = 5.dp) {
-//                TextField(
-//                    value = confirmPassword,
-//                    onValueChange = { confirmPassword = it },
-//                    placeholder = { Text("Konfirmasi Password", color = Color.Gray) },
-//                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-//                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-//                    modifier = Modifier .fillMaxWidth(),
-//                    shape = RoundedCornerShape(15.dp),
-//                    colors = TextFieldDefaults.textFieldColors
-//                        (
-//                        backgroundColor = Color.White,
-//                        textColor = Color.Gray,
-//                        disabledTextColor = Color.Transparent,
-//                        unfocusedIndicatorColor = Color.Transparent,
-//                        focusedIndicatorColor = Color.Transparent
-//                    ),
-//                    trailingIcon = {
-//                        val image = if (passwordVisible)
-//                            Icons.Filled.Visibility
-//                        else Icons.Filled.VisibilityOff
-//
-//                        // Localized description for accessibility services
-//                        val description = if (passwordVisible) "Hide password" else "Show password"
-//
-//                        // Toggle button to hide or display password
-//                        IconButton(onClick = {passwordVisible = !passwordVisible}){
-//                            Icon(imageVector  = image, description)
-//                        }
-//                    }
-//                )
-//            }
-//            Column(modifier = Modifier.padding(top = 10.dp)) {
-//                Button( onClick = { /*TODO*/ },
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .height(45.dp),
-//                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.blue_100)),
-//                    shape = RoundedCornerShape(20.dp),
-//                    elevation = ButtonDefaults.elevation(defaultElevation = 10.dp)
-//                ) {
-//                    Text(text = "Buat Password Baru", fontWeight = FontWeight.Bold, color = Color.White)
-//                }
-//            }
-//
-//            Column(modifier = Modifier.padding(top = 150.dp)) {
-//                Logo()
-//            }
-//        }
-//    }
-//}
+
+@Composable
+fun CreateNewPassword()
+{
+    var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
+    var passwordVisible by remember { mutableStateOf(false) }
+    Box{
+        BackgroundImage()
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(start = 20.dp, top = 30.dp, end = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Text(text = "Buat Password Baru",
+//             style = MaterialTheme.typography.bodyLarge
+                fontSize = 28. sp,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.Bold)
+
+            Card(elevation = 5.dp) {
+                TextField(
+                    value = password,
+                    onValueChange = { password = it },
+                    placeholder = { Text("Masukkan Password", color = Color.Gray) },
+                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                    modifier = Modifier .fillMaxWidth(),
+                    shape = RoundedCornerShape(15.dp),
+                    colors = TextFieldDefaults.textFieldColors
+                        (
+                        backgroundColor = Color.White,
+                        textColor = Color.Gray,
+                        disabledTextColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent
+
+                    ),
+                    trailingIcon = {
+                        val image = if (passwordVisible)
+                            Icons.Filled.Visibility
+                        else Icons.Filled.VisibilityOff
+
+                        // Localized description for accessibility services
+                        val description = if (passwordVisible) "Hide password" else "Show password"
+
+                        // Toggle button to hide or display password
+                        IconButton(onClick = {passwordVisible = !passwordVisible}){
+                            Icon(imageVector  = image, description)
+                        }
+                    }
+                )
+            }
+
+            Card(elevation = 5.dp) {
+                TextField(
+                    value = confirmPassword,
+                    onValueChange = { confirmPassword = it },
+                    placeholder = { Text("Konfirmasi Password", color = Color.Gray) },
+                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                    modifier = Modifier .fillMaxWidth(),
+                    shape = RoundedCornerShape(15.dp),
+                    colors = TextFieldDefaults.textFieldColors
+                        (
+                        backgroundColor = Color.White,
+                        textColor = Color.Gray,
+                        disabledTextColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent
+                    ),
+                    trailingIcon = {
+                        val image = if (passwordVisible)
+                            Icons.Filled.Visibility
+                        else Icons.Filled.VisibilityOff
+
+                        // Localized description for accessibility services
+                        val description = if (passwordVisible) "Hide password" else "Show password"
+
+                        // Toggle button to hide or display password
+                        IconButton(onClick = {passwordVisible = !passwordVisible}){
+                            Icon(imageVector  = image, description)
+                        }
+                    }
+                )
+            }
+            Column(modifier = Modifier.padding(top = 10.dp)) {
+                Button( onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(45.dp),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.blue_100)),
+                    shape = RoundedCornerShape(20.dp),
+                    elevation = ButtonDefaults.elevation(defaultElevation = 10.dp)
+                ) {
+                    Text(text = "Buat Password Baru", fontWeight = FontWeight.Bold, color = Color.White)
+                }
+            }
+
+            Column(modifier = Modifier.padding(top = 150.dp)) {
+                Logo()
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun testingCreate() {
+    CreateNewPassword()
+}
 

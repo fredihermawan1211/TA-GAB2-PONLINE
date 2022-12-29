@@ -1,7 +1,5 @@
 package com.example.ponlineapp.login
 
-
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -10,7 +8,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -30,7 +27,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.ponlineapp.R
-import com.example.ponlineapp.models.RouteNav
+import com.example.ponlineapp.navigation.RouteNav
 
 
 @Composable
@@ -51,6 +48,11 @@ fun TopBarRegister(){
 @Composable
 fun Registerform(navController: NavHostController)
 {
+    var name by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var passwordVisible by remember { mutableStateOf(false) }
+
     Box{
         BackgroundImage()
         Column(
@@ -60,15 +62,11 @@ fun Registerform(navController: NavHostController)
                 .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            var nama by remember { mutableStateOf("") }
-            var email by remember { mutableStateOf("") }
-            var password by remember { mutableStateOf("") }
-            var passwordVisible by remember { mutableStateOf(false) }
             TopBarRegister()
             Card(elevation = 5.dp) {
                 TextField(
-                    value = nama,
-                    onValueChange = { nama = it },
+                    value = name,
+                    onValueChange = { name = it },
                     placeholder = { Text("Nama", color = Color.Gray) },
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     modifier = Modifier.fillMaxWidth(),
@@ -146,38 +144,38 @@ fun Registerform(navController: NavHostController)
                 )
             }
 
-            Card(elevation = 5.dp) {
-                TextField(
-                    value = password,
-                    onValueChange = { password = it },
-                    placeholder = { Text("Konfirmasi Password", color = Color.Gray) },
-                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                    modifier = Modifier .fillMaxWidth(),
-                    shape = RoundedCornerShape(15.dp),
-                    colors = TextFieldDefaults.textFieldColors
-                        (
-                        backgroundColor = Color.White,
-                        textColor = Color.Gray,
-                        disabledTextColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent
-                    ),
-                    trailingIcon = {
-                        val image = if (passwordVisible)
-                            Icons.Filled.Visibility
-                        else Icons.Filled.VisibilityOff
-
-                        // Localized description for accessibility services
-                        val description = if (passwordVisible) "Hide password" else "Show password"
-
-                        // Toggle button to hide or display password
-                        IconButton(onClick = {passwordVisible = !passwordVisible}){
-                            Icon(imageVector  = image, description)
-                        }
-                    }
-                )
-            }
+//            Card(elevation = 5.dp) {
+//                TextField(
+//                    value = password,
+//                    onValueChange = { password = it },
+//                    placeholder = { Text("Konfirmasi Password", color = Color.Gray) },
+//                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+//                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+//                    modifier = Modifier .fillMaxWidth(),
+//                    shape = RoundedCornerShape(15.dp),
+//                    colors = TextFieldDefaults.textFieldColors
+//                        (
+//                        backgroundColor = Color.White,
+//                        textColor = Color.Gray,
+//                        disabledTextColor = Color.Transparent,
+//                        unfocusedIndicatorColor = Color.Transparent,
+//                        focusedIndicatorColor = Color.Transparent
+//                    ),
+//                    trailingIcon = {
+//                        val image = if (passwordVisible)
+//                            Icons.Filled.Visibility
+//                        else Icons.Filled.VisibilityOff
+//
+//                        // Localized description for accessibility services
+//                        val description = if (passwordVisible) "Hide password" else "Show password"
+//
+//                        // Toggle button to hide or display password
+//                        IconButton(onClick = {passwordVisible = !passwordVisible}){
+//                            Icon(imageVector  = image, description)
+//                        }
+//                    }
+//                )
+//            }
             Button( onClick = { /*TODO*/ },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -191,7 +189,7 @@ fun Registerform(navController: NavHostController)
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(text = "Sudah Punya Akun?")
-                TextButton(onClick = { navController.navigate(RouteNav.Login.route) }) {
+                TextButton(onClick = { navController.navigate(route = RouteNav.Login.route) }) {
                     Text(text = "Masuk", fontWeight = FontWeight.Bold, color = colorResource(R.color.blue_100))
                 }
             }
