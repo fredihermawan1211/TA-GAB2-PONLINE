@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,6 +23,10 @@ public class Anggota implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "qriijjxteb")
     private Long id;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "qswtearttuysuainogpgota")
+    private StatusAnggota statusAnggota;
     
     @ManyToOne
     private Komunitas komunitas;
@@ -51,6 +57,15 @@ public class Anggota implements Serializable{
     public void setUser(User user) {
         this.user = user;
     }
+
+    public StatusAnggota getStatusAnggota() {
+        return statusAnggota;
+    }
+
+    public void setStatusAnggota(StatusAnggota statusAnggota) {
+        this.statusAnggota = statusAnggota;
+    }  
+    
     
     
 }

@@ -24,30 +24,41 @@ import com.api.ponline.dao.Response.ApiResponse;
 import com.api.ponline.model.Entity.komunitas.Komunitas;
 import com.api.ponline.services.komunitas.KomunitasServices;
 
+// Anotasi RESTController untuk menandakan bahwa ini kelas rest controller
 @RestController
+// Set base url endpoint (baseurl/komunitas)
 @RequestMapping("/komunitas")
 public class KomunitasController {
     
+    // Inject komunitas service untuk memakai fungsi fungsi yg ada di kelas service
     @Autowired
     private KomunitasServices komunitasServices;
     
+    // inject model mapper untuk memudahkan penyusunan data dari json yang di kirimkan frontend ke objek
     @Autowired
     private ModelMapper modelMapper;
 
+    // enspoin untuk menyimpan data
+    // anotasi untuk menandakan metode yang di gunakan adalah POST
     @PostMapping
     public ResponseEntity<AbstractResponse<Komunitas>> create(@Valid @RequestBody KomunitasRequest komunitasRequest, Errors errors ) {
-    
+        
+        // Siapkan objek kosong untuk di kembalikan
         AbstractResponse<Komunitas> responseData = new AbstractResponse<>();
 
+        // periksa jika ada error
         if (errors.hasErrors()) {
             for (ObjectError error : errors.getAllErrors()) {
                 responseData.getMessages().add(error.getDefaultMessage());
             }
             responseData.setSuccess(false);
             responseData.setPayLoad(null);
+
+            // kembalikan AbstractResponse dengan pesan gagal dan kode error 500
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
         }
-
+        
+        // jika tidak ada error, maka akan di kembalikan respon 200
         Komunitas komunitas = modelMapper.map(komunitasRequest, Komunitas.class);
         responseData.setSuccess(true);
         responseData.setPayLoad(komunitasServices.save(komunitas));
@@ -55,6 +66,8 @@ public class KomunitasController {
 
     }
 
+    // buat endpoint untuk update, penjelasanya sama kaya simpan data hanya saja respon yang di terima sudah ada id objeknya
+    // buat metode PUT
     @PutMapping
     public ResponseEntity<AbstractResponse<Komunitas>> update(@Valid @RequestBody KomunitasRequest komunitasRequest, Errors errors ) {
     
@@ -76,21 +89,33 @@ public class KomunitasController {
 
     }
     
+    // Endpoitn delete
+    // metode DELETE
+    // id di baca dari url
     @DeleteMapping("/delete/{id}")
     public ApiResponse deleteById(@PathVariable("id") Long id) {
+
+        // Buat respon gagal
         ApiResponse response = new ApiResponse(false, "Data Gagal Di hapus");
+
+        // Periksa jika data berhasil di hapus
         if (komunitasServices.deleteById(id)) {
+            // update respon menjadi berhasil
             response.setSuccess(true);
             response.setMessage("Data Berhasil Di hapus");
         }
+        // kembalikan respon
         return response;
     }
     
+    // enpoind untuk membaca semua data
     @GetMapping
     public Iterable<Komunitas> findAll(){
         return komunitasServices.findAll();
     }
 
+    // endpoin untuk mencari data
+    // contoh url (base_url/find/id/{idnya})
     @GetMapping("/find")
     public Komunitas findOne(@RequestParam Long id) {
         return komunitasServices.findOne(id);

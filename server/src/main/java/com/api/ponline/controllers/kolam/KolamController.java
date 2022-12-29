@@ -23,30 +23,40 @@ import com.api.ponline.dao.Response.ApiResponse;
 import com.api.ponline.model.Entity.kolam.Kolam;
 import com.api.ponline.services.kolam.KolamServices;
 
+// Anotasi RESTController untuk menandakan bahwa ini kelas rest controller
 @RestController
+// Set base url endpoint (baseurl/anggota)
 @RequestMapping("/kolam")
 public class KolamController {
 
+    // Inject anggota service untuk memakai fungsi fungsi yg ada di kelas service
     @Autowired
     private KolamServices kolamServices;
     
+    // inject model mapper untuk memudahkan penyusunan data dari json yang di kirimkan frontend ke objek
     @Autowired
     private ModelMapper modelMapper;
 
+    // enspoin untuk menyimpan data
+    // anotasi untuk menandakan metode yang di gunakan adalah POST
     @PostMapping
     public ResponseEntity<AbstractResponse<Kolam>> create(@Valid @RequestBody KolamRequest kolamRequest, Errors errors ) {
     
+        // Siapkan objek kosong untuk di kembalikan
         AbstractResponse<Kolam> responseData = new AbstractResponse<>();
 
+        // periksa jika ada error
         if (errors.hasErrors()) {
             for (ObjectError error : errors.getAllErrors()) {
                 responseData.getMessages().add(error.getDefaultMessage());
             }
             responseData.setSuccess(false);
             responseData.setPayLoad(null);
+            // kembalikan AbstractResponse dengan pesan gagal dan kode error 500
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
         }
 
+        // jika tidak ada error, maka akan di kembalikan respon 200
         Kolam kolam = modelMapper.map(kolamRequest, Kolam.class);
         responseData.setSuccess(true);
         responseData.setPayLoad(kolamServices.save(kolam));
@@ -54,6 +64,8 @@ public class KolamController {
 
     }
 
+    // buat endpoint untuk update, penjelasanya sama kaya simpan data hanya saja respon yang di terima sudah ada id objeknya
+    // buat metode PUT
     @PutMapping
     public ResponseEntity<AbstractResponse<Kolam>> update(@Valid @RequestBody KolamRequest kolamRequest, Errors errors ) {
     
@@ -75,12 +87,15 @@ public class KolamController {
 
     }
 
-
+    // enpoind untuk membaca semua data
     @GetMapping
     public Iterable<Kolam> findAll() {
         return kolamServices.findAll();
     }
-
+    
+    // Endpoitn delete
+    // metode DELETE
+    // id di baca dari url
     @DeleteMapping("/delete/{id}")
     public ApiResponse deleteById(@PathVariable("id") Long id) {
         ApiResponse response = new ApiResponse(false, "Data Gagal Di hapus");
@@ -90,6 +105,4 @@ public class KolamController {
         }
         return response;
     }
-
-    
 }
