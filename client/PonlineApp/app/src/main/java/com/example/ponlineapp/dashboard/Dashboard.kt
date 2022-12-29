@@ -1,16 +1,24 @@
 package com.example.ponlineapp.dashboard
 
 
+import ItineraryDay
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.WindowManager
+import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,18 +29,20 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -49,7 +59,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.ponlineapp.R
 import com.example.ponlineapp.login.BackgroundImage
 import com.example.ponlineapp.login.Loginform
-import com.example.ponlineapp.navigation.RouteNav
+import com.example.ponlineapp.models.RouteNav
+import com.example.ponlineapp.ui.theme.PonlineAppTheme
 
 //@Preview()
 @Composable
@@ -72,12 +83,11 @@ fun NavHostContainer(
 
             // route : Home
             composable("home") {
-                HomeScreen()
             }
 
             // route : search
             composable("search") {
-                Page1Screen()
+//                Page1Screen(navController)
             }
 
             // route : profile
@@ -89,8 +99,8 @@ fun NavHostContainer(
                 Loginform(navController)
 //                Loginform()
             }
-        })
-
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -122,7 +132,7 @@ fun HomeAppBar(
         navigationIcon =  {
             Box {
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
-                    androidx.compose.material3.IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = { /*TODO*/ }) {
                         Image(
                             painter = painterResource(R.drawable.ic_account),
                             contentDescription = null
@@ -135,7 +145,6 @@ fun HomeAppBar(
         colors = topAppBarColors,
         modifier = modifier
     )
-
 }
 
 
@@ -189,22 +198,85 @@ fun BottomNavigationBar(
         }
     }
 }
-//Bandge style size
+
+@Preview
+@Composable
+fun itinerary_card(
+    modifier: Modifier = Modifier
+){
+    var comparator by remember { mutableStateOf(DayComparator) }
+    val context = LocalContext.current
+    val interactionSource = remember {
+        MutableInteractionSource()
+    }
+    LazyColumn(
+        Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+            val sortedList = ItineraryList.sortedWith(comparator)
+            items(sortedList, key = { it.day})
+        {
+            Card(
+                elevation = CardDefaults.cardElevation(2.dp),
+//        elevation = 2.dp,
+                shape = RoundedCornerShape(10.dp),
+                colors = CardDefaults.cardColors(colorResource(id = R.color.secondary)),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(15.dp)
+            )    {
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .background(Color.Transparent),
+                ) {
+                    Text(
+                        text = "Jadwal",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Text(text = it.day +" "+ it.date +" "+ it.month,
+                            style = MaterialTheme.typography.displayMedium)
+                        IconButton(onClick = {
+                            Toast.makeText(context,"Test Toast",Toast.LENGTH_SHORT).show()
+                        },modifier = Modifier
+                            .size(40.dp, 40.dp)
+                            .clip(CircleShape)
+                            .background(Color.Black),
+                            enabled = true,
+                            interactionSource = interactionSource,) {
+
+                            Icon(imageVector = Icons.Filled.Edit,
+                                contentDescription = "Edit",
+                                tint = Color.White)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//Badge style size
 fun Modifier.badgeLayout() =
-    layout {measurable, constraints ->
+    layout {
+            measurable, constraints ->
         val placeable = measurable.measure(constraints)
-
         val minPadding = placeable.height / 4
-
         val width = maxOf(placeable.width + minPadding, placeable.height)
         layout(width, placeable.height) {
             placeable.place((width - placeable.width) / 2, 0)
         }
     }
 
-
-//@Preview(showBackground = true)
-@Preview( showBackground = true,showSystemUi = true)
+@Preview(showBackground = true)
+@OptIn(ExperimentalFoundationApi::class)
+//@Preview( showBackground = true,showSystemUi = true)
 @Composable
 fun HomeScreen(){
     Column(
@@ -218,13 +290,12 @@ fun HomeScreen(){
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Card(
-            elevation = CardDefaults.cardElevation(),
+            elevation = CardDefaults.cardElevation(5.dp),
             shape = RoundedCornerShape(10.dp),
-            colors = CardDefaults.cardColors(colorResource(id = R.color.secondary)),
+            colors = CardDefaults.cardColors(colorResource(id = R.color.blue_f)),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(30.dp),
-
+                .padding(15.dp),
         ) {
             Row(modifier = Modifier
                 .padding(16.dp)
@@ -234,7 +305,7 @@ fun HomeScreen(){
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
-                    androidx.compose.material3.Text(
+                    Text(
                         text = stringResource(
                             id = R.string.comunity
                         ),
@@ -248,7 +319,7 @@ fun HomeScreen(){
                     Box(contentAlignment = Alignment.CenterStart,modifier = Modifier
                         .padding(5.dp, 0.dp, 5.dp, 5.dp)
                         .background(
-                            colorResource(id = R.color.blue_80),
+                            colorResource(id = R.color.secondary),
                             shape = RoundedCornerShape(20.dp)
                         )){
                         Row(
@@ -275,7 +346,7 @@ fun HomeScreen(){
                     Box(contentAlignment = Alignment.CenterStart,modifier = Modifier
                         .padding(5.dp, 5.dp, 5.dp, 0.dp)
                         .background(
-                            colorResource(id = R.color.blue_80),
+                            colorResource(id = R.color.secondary),
                             shape = RoundedCornerShape(20.dp)
                         )){
                         Row(
@@ -301,10 +372,30 @@ fun HomeScreen(){
                     }
                 }
             }
-
         }
+        itinerary_card()
     }
 }
+private val DayComparator = Comparator<ItineraryDay> { left, right ->
+    left.date.compareTo(right.date)
+}
+
+//Fake Date
+private val ItineraryList = listOf(
+    ItineraryDay("Kamis", 1, 12),
+    ItineraryDay("Jumat", 2, 12),
+    ItineraryDay("Sabtu", 3, 12),
+    ItineraryDay("Minggu", 4, 12),
+    ItineraryDay("Senin", 5, 12),
+    ItineraryDay("Selasa", 6, 12),
+    ItineraryDay("Rabu", 7, 12),
+    ItineraryDay("Kamis", 8, 12),
+    ItineraryDay("Jumat", 9, 12),
+    ItineraryDay("Sabtu", 10, 12),
+    ItineraryDay("Minggu", 11, 12),
+    ItineraryDay("Senin", 12, 12),
+    ItineraryDay("Selasa", 13, 12)
+)
 
 //@Preview()
 @Composable
@@ -347,7 +438,6 @@ fun Page2Screen(navHostController: NavHostController) {
         // Text to Display the current Screen
         Text(text = "Profile", color = Color.Black)
         Spacer(modifier = Modifier.height(20.dp))
-
         Button(
             onClick = { navHostController.navigate(RouteNav.Login.route) },
             modifier = Modifier
@@ -355,12 +445,10 @@ fun Page2Screen(navHostController: NavHostController) {
                 .width(150.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red),
             elevation = ButtonDefaults.elevation(defaultElevation = 10.dp),
-
             ) {
             Text(text = "Keluar", fontWeight = FontWeight.Bold, color = Color.White)
         }
     }
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -382,11 +470,12 @@ fun PageTest(){
     ){
 
         val navController = rememberNavController()
+        var comparator by remember { mutableStateOf(DayComparator)}
 //        val appBarColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.87f)
 
         Box {
             BackgroundImage()
-            androidx.compose.material3.Scaffold(
+            Scaffold(
                 containerColor = Color.Transparent,
                 modifier = Modifier
                     .systemBarsPadding(),
@@ -418,25 +507,34 @@ fun PageTest(){
     }
 }
 
-//class MainActivity : ComponentActivity() {
+//@OptIn(ExperimentalMaterial3Api::class)
+//class DashboardActivity : ComponentActivity() {
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
 //        setContent {
 //            PonlineAppTheme {
-//
-//                // remember navController so it does not
-//                // get recreated on recomposition
+//                var comparator by remember { mutableStateOf(DayComparator) }
+//                // A surface container using the 'background' color from the theme
 //                val navController = rememberNavController()
 //
 //                Surface(color = Color.White) {
 //                    // Scaffold Component
 //                    Scaffold(
+//                        // Topbar
+//                        topBar = {
+//                            HomeAppBar(
+//                                topAppBarColors = TopAppBarDefaults.smallTopAppBarColors(
+//                                    containerColor = colorResource(R.color.blue_80)
+//                                ),
+//                                modifier = Modifier.fillMaxWidth()
+//                            )
+//                        },
 //                        // Bottom navigation
 //                        bottomBar = {
 //                            BottomNavigationBar(navController = navController)
 //                        }, content = { padding ->
 //                            // Navhost: where screens are placed
-//                            NavHostContainer(navController = navController, padding = padding)
+//                            NavHostContainer(navController = navController, paddingValues = padding)
 //                        }
 //                    )
 //                }
