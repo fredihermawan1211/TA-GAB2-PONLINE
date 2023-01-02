@@ -72,7 +72,7 @@ fun Loginform(navController: NavHostController,
     //deklarasi Variabel
     var email by rememberSaveable { mutableStateOf(value = "") }
     var password by rememberSaveable { mutableStateOf(value = "") }
-//    val isValidate by derivedStateOf { email.isNotBlank() && password.isNotBlank() }
+    val isValidate by derivedStateOf { email.isNotBlank() && password.isNotBlank() }
     val focusManager = LocalFocusManager.current
     // Creating a variable to store toggle state
     var passwordVisible by remember { mutableStateOf(false) }
@@ -105,7 +105,7 @@ fun Loginform(navController: NavHostController,
                         colors = TextFieldDefaults.textFieldColors
                             (
                             backgroundColor =  Color.White,
-                            textColor = Color.Gray,
+                            textColor = Color.Black,
                             //untuk menghilangkan underline
                             disabledTextColor = Color.Transparent,
                             focusedIndicatorColor = Color.Transparent,
@@ -133,7 +133,7 @@ fun Loginform(navController: NavHostController,
                     colors = TextFieldDefaults.textFieldColors
                         (
                         backgroundColor = Color.White,
-                        textColor = Color.Gray,
+                        textColor = Color.Black,
                         disabledTextColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         focusedIndicatorColor = Color.Transparent
@@ -167,7 +167,7 @@ fun Loginform(navController: NavHostController,
                 }
 
                 Button( onClick = { onclickLogin(email, password)},
-//                    enabled = isValidate,
+                    enabled = isValidate,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 10.dp),

@@ -31,8 +31,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.ponlineapp.R
 import com.example.ponlineapp.navigation.RouteNav
-
-
+import com.example.ponlineapp.viewModel.LoginViewModel
 
 
 @Composable
@@ -51,10 +50,11 @@ fun TopBarRegister(){
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun Registerform(navController: NavHostController,
-                 loadingProgressBar: Boolean,
-                 onclickRegister: (nama:String, email: String, password: String) -> Unit,
-                 imageError: Boolean)
+fun Registerform(
+    navController: NavHostController,
+    loadingProgressBar: Boolean,
+    onclickRegister: (nama: String, email: String, password: String) -> Unit
+)
 {
     var nama by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -197,15 +197,16 @@ fun Registerform(navController: NavHostController,
                         }
                     }
                 )
-                // Cek Password Match
-                validate()
-                if (erorMessage.isNotEmpty()){
-                    Text(text = erorMessage,
-                        color = MaterialTheme.colors.error,
-                        style = MaterialTheme.typography.caption,
-                        modifier = Modifier.padding(start = 16.dp, top = 10.dp))
-                }
 
+            }
+            // Cek Password Match
+            validate()
+            if (erorMessage.isNotEmpty()){
+                Text(text = erorMessage,
+                    color = MaterialTheme.colors.error,
+                    style = MaterialTheme.typography.caption,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Left)
             }
 
             Button( onClick = {onclickRegister(nama, email, password)},
@@ -285,12 +286,16 @@ fun verifyPage(navController: NavHostController) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun testpage() {
-    val navController = rememberNavController()
-    verifyPage(navController = navController)
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun testpage() {
+//    val viewModel = LoginViewModel()
+//    val loadingProgressBar = viewModel.progressBar.value
+//    val imageError = viewModel.imageErrorAuth.value
+//    val navController = rememberNavController()
+//    Registerform(navController = navController, loadingProgressBar = loadingProgressBar, onclickRegister = viewModel::register)
+//}
+
 
 
 

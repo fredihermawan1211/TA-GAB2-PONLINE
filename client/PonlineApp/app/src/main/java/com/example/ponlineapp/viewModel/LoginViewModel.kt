@@ -32,7 +32,7 @@ class LoginViewModel : ViewModel() {
                     delay(1500L)
                     isSuccessLoading.value = true
                     responseService.body()?.let { tokenDto ->
-                        Log.d("Logging", "Response TokenDto: $tokenDto")
+                        Log.d("Logging", "Response TokenDto: ${tokenDto.accessTokenVerify}")
                     }
                 } else {
                     responseService.errorBody()?.let { error ->
