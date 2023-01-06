@@ -109,7 +109,7 @@ public class AuthenticationController {
                     "", 
                     "If the 'Verify Email' button cannot be used, click on the following link: ",
                     "Verify Email", 
-                    ponTools.ponlineBaseUrl()+"/auth/verifymail?token=" + token
+                    ponTools.ponlineBaseUrl()+"/authentication/verifymail?token=" + token
                     );
                 
                 // response 500 dan kembalikan pesan untuk memverifikasi email
@@ -161,7 +161,7 @@ public class AuthenticationController {
             "", 
             "If the 'Verify Email' button cannot be used, click on the following link: ",
             "Verify Email", 
-            ponTools.ponlineBaseUrl()+"/auth/verifymail?token=" + token
+            ponTools.ponlineBaseUrl()+"/authentication/verifymail?token=" + token
             );
 
             // Respon 200, pesan perintahkan verifikasi email
@@ -209,7 +209,7 @@ public class AuthenticationController {
             "If you did not request a password reset, no further action is required.", 
             "If you're having trouble clicking the \"Reset Password\" button, copy and paste the URL below into your web browser: ",
             "Reset Password", 
-            ponTools.ponlineBaseUrl()+"/auth/resetpassword?token=" + token
+            ponTools.ponlineBaseUrl()+"/authentication/resetpassword?token=" + token
             );
 
         // respon 200
