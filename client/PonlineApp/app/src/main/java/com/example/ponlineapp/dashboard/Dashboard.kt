@@ -1,15 +1,10 @@
 package com.example.ponlineapp.dashboard
 
 
+import Constants
 import ItineraryDay
-import android.annotation.SuppressLint
-import android.os.Bundle
-import android.util.DisplayMetrics
-import android.view.WindowManager
+import Testdate
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,10 +14,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.material.*
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -30,26 +21,23 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -61,7 +49,29 @@ import com.example.ponlineapp.R
 import com.example.ponlineapp.login.BackgroundImage
 import com.example.ponlineapp.login.Loginform
 import com.example.ponlineapp.models.RouteNav
-import com.example.ponlineapp.ui.theme.PonlineAppTheme
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+
+
+//Api REQ
+//fun ApiTest(){
+//    val client = OkHttpClient()
+//
+//    val mediaType = "application/json".toMediaTypeOrNull()
+//    val body = RequestBody.create(mediaType, "{\r\n\t\"email\": \"pon_user1@quickat.work\",\r\n\t\"password\": \"123456\"\r\n}")
+//    val request = Request.Builder()
+//        .url("http://localhost:8080/authentication/login")
+//        .post(body)
+//        .addHeader("Accept", "*/*")
+//        .addHeader("Content-Type", "application/json")
+//        .build()
+//
+//    val response = client.newCall(request).execute()
+//}
+
 
 //@Preview()
 @Composable
@@ -84,6 +94,7 @@ fun NavHostContainer(
 
             // route : Home
             composable("home") {
+                HomeScreen(navController)
             }
 
             // route : search
@@ -241,16 +252,20 @@ fun itinerary_card(
                         modifier = Modifier
                             .fillMaxWidth()
                     ) {
-                        Text(text = it.day +" "+ it.date +" "+ it.month,
+                        Text(text = it.day +","+ it.date +" "+ it.month,
                             style = MaterialTheme.typography.displayMedium)
-                        IconButton(onClick = {
-                            Toast.makeText(context,"Test Toast",Toast.LENGTH_SHORT).show()
-                        },modifier = Modifier
-                            .size(40.dp, 40.dp)
-                            .clip(CircleShape)
-                            .background(Color.Black),
+                        IconButton(
+                            onClick = {
+//                                ApiTest()
+                                Toast.makeText(context, "ApiTest()".toString(), Toast.LENGTH_SHORT).show()
+                            },
+                            modifier = Modifier
+                                .size(40.dp, 40.dp)
+                                .clip(CircleShape)
+                                .background(Color.Black),
                             enabled = true,
-                            interactionSource = interactionSource,) {
+                            interactionSource = interactionSource,
+                        ) {
 
                             Icon(imageVector = Icons.Filled.Edit,
                                 contentDescription = "Edit",
@@ -275,11 +290,11 @@ fun Modifier.badgeLayout() =
         }
     }
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @OptIn(ExperimentalFoundationApi::class)
 //@Preview( showBackground = true,showSystemUi = true)
 @Composable
-fun HomeScreen(){
+fun HomeScreen(navHostController: NavHostController){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -396,6 +411,15 @@ private val ItineraryList = listOf(
     ItineraryDay("Minggu", 11, 12),
     ItineraryDay("Senin", 12, 12),
     ItineraryDay("Selasa", 13, 12)
+)
+
+private val DateTest = listOf(
+    Testdate("Kamis,20 Dec"),
+    Testdate("Kamis,21 Dec"),
+    Testdate("Kamis,22 Dec"),
+    Testdate("Kamis,23 Dec"),
+    Testdate("Kamis,24 Dec"),
+    Testdate("Kamis,25 Dec"),
 )
 
 //@Preview()

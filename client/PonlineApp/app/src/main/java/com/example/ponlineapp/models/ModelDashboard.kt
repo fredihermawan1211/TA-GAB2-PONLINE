@@ -1,9 +1,5 @@
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.graphics.vector.ImageVector
-import java.util.Date
+
 
 data class BottomNavItem(
     val label: String,
@@ -14,5 +10,8 @@ data class ItineraryDay(
     val day: String,
     val date:Int,
     val month: Int,
+)
+data class Testdate(
+    val date: String,
 )
 
