@@ -12,7 +12,7 @@ sealed class RouteNav(val route: String)
     object NavigationScreen : RouteNav("NavigationLogin")
 
     companion object{
-        fun getStartDestination(): String = Login.route
+        fun getStartDestination(): String = SplashScreen.route
 
     }
 }

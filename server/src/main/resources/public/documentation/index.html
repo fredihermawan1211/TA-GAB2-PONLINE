@@ -16,7 +16,8 @@
             <br>
 
             <label>How to use ?</label>
-            <button  id="btn_auth"> Authentification</button>
+            <button  id="btn_authentication"> Authentication</button>
+            <button  id="btn_authorization"> Authorization</button>
             <button id="btn_user"> User</button>
             <button id="btn_komunitas"> Komunitas</button>
             <button id="btn_anggota"> Anggota</button>
@@ -25,14 +26,15 @@
         </nav>
         <div style="width: 13%;" class="devider-width-10"></div>
         <section class="section-content">
-            <iframe id="frame_content" type="application/pdf" src="./archive/api-pon-doc-summary.pdf"></iframe>
+            <iframe  policy="SAMEORIGIN" id="frame_content" type="application/pdf" src="./archive/api-pon-doc-summary.pdf"></iframe>
         </section>
     </main>
     <script>
         const frame_content = document.getElementById("frame_content");
 
         const btn_summary = document.getElementById("btn_summary");
-        const btn_auth = document.getElementById("btn_auth");
+        const btn_authentication = document.getElementById("btn_authentication");
+        const btn_authorization = document.getElementById("btn_authorization");
         const btn_user = document.getElementById("btn_user");
         const btn_komunitas = document.getElementById("btn_komunitas");
         const btn_anggota = document.getElementById("btn_anggota");
@@ -44,9 +46,13 @@
             addMark(btn_summary)
         });
 
-        btn_auth.addEventListener("click", function(){
-            generateContent("./archive/api-pon-doc-authentification.pdf")
-            addMark(btn_auth)
+        btn_authentication.addEventListener("click", function(){
+            generateContent("./archive/api-pon-doc-otentikasi.pdf")
+            addMark(btn_authentication)
+        });
+        btn_authorization.addEventListener("click", function(){
+            generateContent("./archive/api-pon-doc-otorisasi.pdf")
+            addMark(btn_authorization)
         });
         btn_user.addEventListener("click", function(){
             generateContent("./archive/api-pon-doc-user.pdf")
@@ -76,7 +82,8 @@
         function addMark(button){
             btn_summary.classList.remove("menu-active")
             
-            btn_auth.classList.remove("menu-active")
+            btn_authentication.classList.remove("menu-active")
+            btn_authorization.classList.remove("menu-active")
             btn_user.classList.remove("menu-active")
             btn_komunitas.classList.remove("menu-active")
             btn_anggota.classList.remove("menu-active")

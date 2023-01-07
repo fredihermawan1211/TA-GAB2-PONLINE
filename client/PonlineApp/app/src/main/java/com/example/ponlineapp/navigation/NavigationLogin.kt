@@ -1,17 +1,14 @@
 package com.example.ponlineapp.login
 
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.ponlineapp.dashboard.HomeScreen
-import com.example.ponlineapp.dashboard.NavHostContainer
+import com.example.ponlineapp.login.components.SplashScreen
 import com.example.ponlineapp.navigation.RouteNav
+import com.example.ponlineapp.network.dto.TokenDto
 import com.example.ponlineapp.viewModel.LoginViewModel
 import java.lang.reflect.Modifier
 
@@ -22,6 +19,7 @@ fun NavigationScreen(viewModel: LoginViewModel) {
     val navController = rememberNavController()
     val loadingProgressBar = viewModel.progressBar.value
     val imageError = viewModel.imageErrorAuth.value
+
 
     NavHost(
         navController = navController,
@@ -58,8 +56,7 @@ fun NavigationScreen(viewModel: LoginViewModel) {
                 Registerform(
                     navController = navController,
                     loadingProgressBar = loadingProgressBar,
-                    onclickRegister = viewModel::register,
-                    imageError = imageError
+                    onclickRegister = viewModel::register
                 )
             }
         }
@@ -77,6 +74,9 @@ fun NavigationScreen(viewModel: LoginViewModel) {
         }
         composable(RouteNav.Verify.route){
             verifyPage(navController = navController)
+        }
+        composable(RouteNav.SplashScreen.route){
+            SplashScreen(navHostController = navController)
         }
 
 

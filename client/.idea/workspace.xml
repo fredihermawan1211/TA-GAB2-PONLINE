@@ -4,7 +4,20 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ee799354-c74b-436d-b1d3-30170a962bc3" name="Changes" comment="" />
+    <list default="true" id="ee799354-c74b-436d-b1d3-30170a962bc3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/PonlineApp/app/src/main/java/com/example/ponlineapp/network/Model/userToken.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PonlineApp/app/src/main/java/com/example/ponlineapp/network/repository/UserRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PonlineApp/app/src/main/java/com/example/ponlineapp/network/repository/dbToken.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PonlineApp/.idea/deploymentTargetDropDown.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PonlineApp/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/PonlineApp/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PonlineApp/app/src/main/java/com/example/ponlineapp/login/LoginActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/PonlineApp/app/src/main/java/com/example/ponlineapp/login/LoginActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PonlineApp/app/src/main/java/com/example/ponlineapp/login/components/SplashScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/PonlineApp/app/src/main/java/com/example/ponlineapp/login/components/SplashScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PonlineApp/app/src/main/java/com/example/ponlineapp/navigation/NavigationLogin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/PonlineApp/app/src/main/java/com/example/ponlineapp/navigation/NavigationLogin.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PonlineApp/app/src/main/java/com/example/ponlineapp/network/dto/LoginDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/PonlineApp/app/src/main/java/com/example/ponlineapp/network/dto/LoginDto.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PonlineApp/app/src/main/java/com/example/ponlineapp/network/dto/TokenDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/PonlineApp/app/src/main/java/com/example/ponlineapp/network/dto/TokenDto.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PonlineApp/app/src/main/java/com/example/ponlineapp/network/repository/AuthApiService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/PonlineApp/app/src/main/java/com/example/ponlineapp/network/repository/AuthApiService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PonlineApp/app/src/main/java/com/example/ponlineapp/viewModel/LoginViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/PonlineApp/app/src/main/java/com/example/ponlineapp/viewModel/LoginViewModel.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,7 +41,7 @@
     <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="cidr.known.project.marker" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/PonlineApp" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
