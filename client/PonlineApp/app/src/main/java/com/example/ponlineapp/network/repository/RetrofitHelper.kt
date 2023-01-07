@@ -34,5 +34,8 @@ object RetrofitHelper {
     fun getAuthService() : AuthApiService {
         return retrofit.create(AuthApiService::class.java)
     }
+    fun getDashboardService() : DashboardApiService{
+        return retrofit.create(DashboardApiService::class.java)
+    }
 
 }

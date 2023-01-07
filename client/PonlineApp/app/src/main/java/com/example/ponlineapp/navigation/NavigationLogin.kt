@@ -70,7 +70,7 @@ fun NavigationScreen(viewModel: LoginViewModel) {
             ConfirmPassword(navController = navController, email)
         }
         composable(RouteNav.Home.route){
-            HomeScreen(navController = navController)
+            HomeScreen(navHostController = navController)
         }
         composable(RouteNav.Verify.route){
             verifyPage(navController = navController)
