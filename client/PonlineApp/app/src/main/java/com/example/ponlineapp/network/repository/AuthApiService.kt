@@ -15,3 +15,4 @@ interface AuthApiService {
     @POST("authentication/signup")
     suspend fun getRegister(@Body register: Register) : Response<RegisterDto>
 }
+

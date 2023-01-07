@@ -1,7 +1,6 @@
 package com.example.ponlineapp.login
 
 import android.annotation.SuppressLint
-import android.util.Patterns
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,6 +24,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.ImeAction
@@ -37,7 +37,10 @@ import com.example.ponlineapp.R
 import com.example.ponlineapp.login.components.ErrorImageAuth
 import com.example.ponlineapp.login.components.ProgressBarLoading
 import com.example.ponlineapp.navigation.RouteNav
+import kotlinx.coroutines.launch
 import java.util.regex.Pattern
+
+
 
 @Composable
 fun BackgroundImage()
@@ -74,7 +77,6 @@ fun Loginform(navController: NavHostController,
     var password by rememberSaveable { mutableStateOf(value = "") }
     val isValidate by derivedStateOf { email.isNotBlank() && password.isNotBlank() }
     val focusManager = LocalFocusManager.current
-    // Creating a variable to store toggle state
     var passwordVisible by remember { mutableStateOf(false) }
 
     Box{
@@ -166,7 +168,8 @@ fun Loginform(navController: NavHostController,
                     }
                 }
 
-                Button( onClick = { onclickLogin(email, password)},
+                Button( onClick = { onclickLogin(email, password)
+                                  },
                     enabled = isValidate,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -203,6 +206,7 @@ fun Loginform(navController: NavHostController,
     ErrorImageAuth(isImageValidate = imageError)
 
     ProgressBarLoading(isLoading = loadingProgressBar)
+
 
 }
 

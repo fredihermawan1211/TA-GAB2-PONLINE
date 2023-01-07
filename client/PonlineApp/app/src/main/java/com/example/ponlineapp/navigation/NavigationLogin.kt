@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.ponlineapp.dashboard.HomeScreen
 import com.example.ponlineapp.login.components.SplashScreen
 import com.example.ponlineapp.navigation.RouteNav
+import com.example.ponlineapp.network.dto.TokenDto
 import com.example.ponlineapp.viewModel.LoginViewModel
 import java.lang.reflect.Modifier
 
@@ -18,6 +19,7 @@ fun NavigationScreen(viewModel: LoginViewModel) {
     val navController = rememberNavController()
     val loadingProgressBar = viewModel.progressBar.value
     val imageError = viewModel.imageErrorAuth.value
+
 
     NavHost(
         navController = navController,
