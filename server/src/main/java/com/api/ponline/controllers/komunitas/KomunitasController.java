@@ -6,6 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,6 +42,7 @@ public class KomunitasController {
     // enspoin untuk menyimpan data
     // anotasi untuk menandakan metode yang di gunakan adalah POST
     @PostMapping
+    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<AbstractResponse<Komunitas>> create(@Valid @RequestBody KomunitasRequest komunitasRequest, Errors errors ) {
         
         // Siapkan objek kosong untuk di kembalikan
@@ -69,6 +71,7 @@ public class KomunitasController {
     // buat endpoint untuk update, penjelasanya sama kaya simpan data hanya saja respon yang di terima sudah ada id objeknya
     // buat metode PUT
     @PutMapping
+    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<AbstractResponse<Komunitas>> update(@Valid @RequestBody KomunitasRequest komunitasRequest, Errors errors ) {
     
         AbstractResponse<Komunitas> responseData = new AbstractResponse<>();
@@ -93,6 +96,7 @@ public class KomunitasController {
     // metode DELETE
     // id di baca dari url
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('OWNER')")
     public ApiResponse deleteById(@PathVariable("id") Long id) {
 
         // Buat respon gagal
