@@ -41,7 +41,7 @@ import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 
-
+@Preview()
 @Composable
 fun BackgroundImage()
 {
@@ -206,8 +206,6 @@ fun Loginform(navController: NavHostController,
     ErrorImageAuth(isImageValidate = imageError)
 
     ProgressBarLoading(isLoading = loadingProgressBar)
-
-
 }
 
 
