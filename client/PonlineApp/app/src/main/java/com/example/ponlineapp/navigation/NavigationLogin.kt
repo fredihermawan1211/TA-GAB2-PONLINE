@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.ponlineapp.dashboard.HomeScreen
+import com.example.ponlineapp.dashboard.MainPage
 import com.example.ponlineapp.login.components.SplashScreen
 import com.example.ponlineapp.navigation.RouteNav
 import com.example.ponlineapp.network.dto.TokenDto
@@ -65,18 +66,22 @@ fun NavigationScreen(viewModel: LoginViewModel) {
             ForgotPassword(navController = navController)
         }
         composable(RouteNav.ConfirmPassword.route + "/{email}"){ backStackEntry ->
-
             val email = backStackEntry.arguments?.getString("email")
             ConfirmPassword(navController = navController, email)
         }
         composable(RouteNav.Home.route){
-            HomeScreen(navHostController = navController)
+//            HomeScreen(navHostController = navController)
+            MainPage()
         }
         composable(RouteNav.Verify.route){
             verifyPage(navController = navController)
         }
         composable(RouteNav.SplashScreen.route){
             SplashScreen(navHostController = navController)
+        }
+        composable(RouteNav.Profile.route){
+//            HomeScreen(navHostController = navController)
+            MainPage()
         }
 
 

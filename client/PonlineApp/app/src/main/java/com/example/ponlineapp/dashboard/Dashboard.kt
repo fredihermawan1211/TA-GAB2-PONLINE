@@ -127,7 +127,6 @@ fun HomeAppBar(
                         )
                     }
                 }
-
             }
         },
         colors = topAppBarColors,
@@ -267,103 +266,113 @@ fun Modifier.badgeLayout() =
 //@Preview( showBackground = true,showSystemUi = true)
 @Composable
 fun HomeScreen(navHostController: NavHostController){
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Transparent)
-            .windowInsetsPadding(
-                WindowInsets.systemBars.only(WindowInsetsSides.Horizontal)
-            ),
-        // Parameters set to place the items in center
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Card(
-            elevation = CardDefaults.cardElevation(5.dp),
-            shape = RoundedCornerShape(10.dp),
-            colors = CardDefaults.cardColors(colorResource(id = R.color.blue_f)),
+    Box {
+        BackgroundImage()
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(15.dp),
+                .fillMaxSize()
+                .background(Color.Transparent)
+                .windowInsetsPadding(
+                    WindowInsets.systemBars.only(WindowInsetsSides.Horizontal)
+                ),
+            // Parameters set to place the items in center
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Row(modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween){
-                Column(
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ){
-                    Text(
-                        text = stringResource(
-                            id = R.string.comunity
-                        ),
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
-                Column(
-                    modifier = Modifier,
-                    verticalArrangement = Arrangement.Top,
-                ){
-                    Box(contentAlignment = Alignment.CenterStart,modifier = Modifier
-                        .padding(5.dp, 0.dp, 5.dp, 5.dp)
-                        .background(
-                            colorResource(id = R.color.secondary),
-                            shape = RoundedCornerShape(20.dp)
-                        )){
-                        Row(
-                            modifier = Modifier
-                                .padding(10.dp, 1.dp)
-                                .width(75.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text( stringResource(id = R.string.anggota))
-                            Text(
-                                stringResource(id = R.string.Jumlah_Anggota),
-                                modifier = Modifier
-                                    .background(
-                                        colorResource(id = R.color.orange_100),
-                                        shape = CircleShape
-                                    )
-                                    .badgeLayout(),
-                                fontSize = 10.sp,
-                                fontFamily = FontFamily.SansSerif,
-                            )
-                        }
+            Card(
+                elevation = CardDefaults.cardElevation(5.dp),
+                shape = RoundedCornerShape(10.dp),
+                colors = CardDefaults.cardColors(colorResource(id = R.color.blue_f)),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(15.dp),
+            ) {
+                Row(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = stringResource(
+                                id = R.string.comunity
+                            ),
+                            style = MaterialTheme.typography.bodyMedium
+                        )
                     }
-                    Box(contentAlignment = Alignment.CenterStart,modifier = Modifier
-                        .padding(5.dp, 5.dp, 5.dp, 0.dp)
-                        .background(
-                            colorResource(id = R.color.secondary),
-                            shape = RoundedCornerShape(20.dp)
-                        )){
-                        Row(
-                            modifier = Modifier
-                                .padding(10.dp, 1.dp)
-                                .width(75.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
+                    Column(
+                        modifier = Modifier,
+                        verticalArrangement = Arrangement.Top,
+                    ) {
+                        Box(
+                            contentAlignment = Alignment.CenterStart, modifier = Modifier
+                                .padding(5.dp, 0.dp, 5.dp, 5.dp)
+                                .background(
+                                    colorResource(id = R.color.secondary),
+                                    shape = RoundedCornerShape(20.dp)
+                                )
                         ) {
-                            Text( stringResource(id = R.string.kolam))
-                            Text(
-                                stringResource(id = R.string.Jumlah_Kolam),
+                            Row(
                                 modifier = Modifier
-                                    .background(
-                                        colorResource(id = R.color.orange_100),
-                                        shape = CircleShape
-                                    )
-                                    .badgeLayout(),
-                                fontSize = 10.sp,
-                                fontFamily = FontFamily.SansSerif,
-                            )
+                                    .padding(10.dp, 1.dp)
+                                    .width(75.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(stringResource(id = R.string.anggota))
+                                Text(
+                                    stringResource(id = R.string.Jumlah_Anggota),
+                                    modifier = Modifier
+                                        .background(
+                                            colorResource(id = R.color.orange_100),
+                                            shape = CircleShape
+                                        )
+                                        .badgeLayout(),
+                                    fontSize = 10.sp,
+                                    fontFamily = FontFamily.SansSerif,
+                                )
+                            }
+                        }
+                        Box(
+                            contentAlignment = Alignment.CenterStart, modifier = Modifier
+                                .padding(5.dp, 5.dp, 5.dp, 0.dp)
+                                .background(
+                                    colorResource(id = R.color.secondary),
+                                    shape = RoundedCornerShape(20.dp)
+                                )
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .padding(10.dp, 1.dp)
+                                    .width(75.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(stringResource(id = R.string.kolam))
+                                Text(
+                                    stringResource(id = R.string.Jumlah_Kolam),
+                                    modifier = Modifier
+                                        .background(
+                                            colorResource(id = R.color.orange_100),
+                                            shape = CircleShape
+                                        )
+                                        .badgeLayout(),
+                                    fontSize = 10.sp,
+                                    fontFamily = FontFamily.SansSerif,
+                                )
+                            }
                         }
                     }
                 }
             }
+            itinerary_card()
         }
-        itinerary_card()
     }
 }
+
 private val DayComparator = Comparator<ItineraryDay> { left, right ->
     left.date.compareTo(right.date)
 }
@@ -451,7 +460,7 @@ fun Page2Screen(navHostController: NavHostController) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable()
-fun PageTest(){
+fun MainPage(){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -462,8 +471,6 @@ fun PageTest(){
 //                    .add(WindowInsets(top = 25.dp, bottom = 50.dp))
 //                    .asPaddingValues()
             )
-
-
     ){
 
         val navController = rememberNavController()
@@ -503,7 +510,7 @@ fun PageTest(){
         }
     }
 }
-
+//
 //@OptIn(ExperimentalMaterial3Api::class)
 //class DashboardActivity : ComponentActivity() {
 //    override fun onCreate(savedInstanceState: Bundle?) {
