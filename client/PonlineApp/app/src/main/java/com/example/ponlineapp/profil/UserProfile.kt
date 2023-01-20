@@ -38,44 +38,30 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.example.ponlineapp.R
 import com.example.ponlineapp.login.BackgroundImage
+import com.example.ponlineapp.navigation.RouteNav
 import com.example.ponlineapp.ui.theme.PonlineAppTheme
 
-class ProfileActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            PonlineAppTheme() {
-                // A surface container using the 'background' color from the theme
-                androidx.compose.material.Surface(color = MaterialTheme.colors.background) {
-                    ProfileScreen()
-                }
-            }
-        }
-    }
-}
-
-
-@Composable
-fun ProfileImage(
-    drawableResource: Int,
-    description: String,
-    modifier: Modifier = Modifier
-) {
-    Image(
-        modifier = modifier
-            .size(176.dp)
-            .clip(CircleShape),
-        painter = painterResource(id = drawableResource),
-        contentDescription = description,
-    )
-}
+//class ProfileActivity : ComponentActivity() {
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContent {
+//            PonlineAppTheme() {
+//                // A surface container using the 'background' color from the theme
+//                androidx.compose.material.Surface(color = MaterialTheme.colors.background) {
+//                    ProfileScreen()
+//                }
+//            }
+//        }
+//    }
+//}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileAppBar(
+fun ProfileAppBar(navController : NavHostController,
     topAppBarColors: TopAppBarColors,
     modifier: Modifier = Modifier
 ){
@@ -84,19 +70,21 @@ fun ProfileAppBar(
         navigationIcon =  {
             Box {
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = { navController.navigate(RouteNav.Home.route) }) {
                         Image(Icons.Filled.ArrowBack, null)
                     }
                 }
             }
-        },
+        }
+        ,
         colors = topAppBarColors,
         modifier = modifier
     )
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(navController: NavHostController) {
     val notification = rememberSaveable { mutableStateOf("") }
     if (notification.value.isNotEmpty()) {
         Toast.makeText(LocalContext.current, notification.value, Toast.LENGTH_LONG).show()
@@ -106,7 +94,7 @@ fun ProfileScreen() {
     var name by rememberSaveable { mutableStateOf("Nama User") }
     var email by rememberSaveable { mutableStateOf("Email User") }
     var jabatan by rememberSaveable { mutableStateOf("Jabatan User") }
-
+    val ctx = LocalContext.current
     Box {
         BackgroundImage()
         Column(
@@ -121,6 +109,7 @@ fun ProfileScreen() {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 ProfileAppBar(
+                    navController = navController,
                     topAppBarColors = TopAppBarDefaults.smallTopAppBarColors(
                     containerColor = colorResource(com.google.android.material.R.color.mtrl_btn_transparent_bg_color)
                 ),
@@ -189,7 +178,7 @@ fun ProfileScreen() {
             }
             Column(modifier = Modifier.padding(8.dp,12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,) {
-                Button( onClick = { /*TODO*/
+                Button( onClick = { Toast.makeText(ctx, "Ubah Password", Toast.LENGTH_SHORT).show()
                 },
                     enabled = true,
                     modifier = Modifier
@@ -207,7 +196,7 @@ fun ProfileScreen() {
                     )
                 }
                 
-                Button( onClick = { /*TODO*/
+                Button( onClick = { navController.navigate(RouteNav.EditProfile.route)
                 },
                     enabled = true,
                     modifier = Modifier
@@ -233,7 +222,7 @@ fun ProfileScreen() {
             }
 
         }
-        Button( onClick = { /*TODO*/
+        Button( onClick = { Toast.makeText(ctx, "Logour", Toast.LENGTH_SHORT).show()
         },
             enabled = true,
             modifier = Modifier
@@ -294,26 +283,26 @@ fun ProfileImage() {
                     contentDescription = "profile",
                     modifier = Modifier
                         .wrapContentSize()
-                        .clickable { launcher.launch("image/*") }
+//                        .clickable { launcher.launch("image/*") }
                         .fillMaxSize()
                         .clip(CircleShape)
                     ,
                     contentScale = ContentScale.Crop
                 )
-                FloatingActionButton(
-                    modifier = Modifier.align(Alignment.BottomEnd),
-                    // on below line we are adding on click for our fab
-                    onClick = {
-                        Toast.makeText(ctx, "Simple Floating Action Button", Toast.LENGTH_SHORT).show()
-                    },
-                    backgroundColor = blue,
-                    contentColor = Color.White,
-                    elevation = FloatingActionButtonDefaults.elevation(0.dp)
-                ) {
-                    // on below line we are
-                    // adding icon for button.
-                    Icon(imageVector = Icons.Filled.Edit, contentDescription = "Add")
-                }
+//                FloatingActionButton(
+//                    modifier = Modifier.align(Alignment.BottomEnd).clickable { launcher.launch("image/*") },
+//                    // on below line we are adding on click for our fab
+////                    onClick = {
+////                        Toast.makeText(ctx, "Simple Floating Action Button", Toast.LENGTH_SHORT).show()
+////                    },
+//                    backgroundColor = blue,
+//                    contentColor = Color.White,
+//                    elevation = FloatingActionButtonDefaults.elevation(0.dp)
+//                ) {
+//                    // on below line we are
+//                    // adding icon for button.
+//                    Icon(imageVector = Icons.Filled.Edit, contentDescription = "Add")
+//                }
             }
         }
     }
@@ -349,8 +338,8 @@ fun ProfileImage() {
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
+fun DefaultUserPreview() {
     PonlineAppTheme() {
-        ProfileScreen()
+//        ProfileScreen()
     }
 }

@@ -10,6 +10,8 @@ import com.example.ponlineapp.dashboard.MainPage
 import com.example.ponlineapp.login.components.SplashScreen
 import com.example.ponlineapp.navigation.RouteNav
 import com.example.ponlineapp.network.dto.TokenDto
+import com.example.ponlineapp.profil.EditProfileScreen
+import com.example.ponlineapp.profil.ProfileScreen
 import com.example.ponlineapp.viewModel.LoginViewModel
 import java.lang.reflect.Modifier
 
@@ -71,7 +73,7 @@ fun NavigationScreen(viewModel: LoginViewModel) {
         }
         composable(RouteNav.Home.route){
 //            HomeScreen(navHostController = navController)
-            MainPage()
+            MainPage(navController = navController)
         }
         composable(RouteNav.Verify.route){
             verifyPage(navController = navController)
@@ -80,8 +82,10 @@ fun NavigationScreen(viewModel: LoginViewModel) {
             SplashScreen(navHostController = navController)
         }
         composable(RouteNav.Profile.route){
-//            HomeScreen(navHostController = navController)
-            MainPage()
+            ProfileScreen(navController = navController)
+        }
+        composable(RouteNav.Profile.route){
+            EditProfileScreen(navController = navController)
         }
 
 
