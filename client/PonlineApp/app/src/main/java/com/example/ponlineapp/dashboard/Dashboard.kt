@@ -93,7 +93,7 @@ fun NavHostContainer(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeAppBar(
+fun HomeAppBar(navController: NavHostController,
     topAppBarColors: TopAppBarColors,
     modifier: Modifier = Modifier
 ){
@@ -120,7 +120,7 @@ fun HomeAppBar(
         navigationIcon =  {
             Box {
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = { navController.navigate(RouteNav.Profile.route)}) {
                         Image(
                             painter = painterResource(R.drawable.ic_account),
                             contentDescription = null
@@ -458,9 +458,9 @@ fun Page2Screen(navHostController: NavHostController) {
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable()
-fun MainPage(){
+fun MainPage(navController: NavHostController){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -486,6 +486,7 @@ fun MainPage(){
                 topBar = {
 //                    val appBarColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.87f)
                     HomeAppBar(
+                        navController = navController,
                         topAppBarColors = TopAppBarDefaults.smallTopAppBarColors(
                             containerColor = colorResource(R.color.blue_80)
                         ),
