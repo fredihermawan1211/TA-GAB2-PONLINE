@@ -73,7 +73,8 @@ fun NavigationScreen(viewModel: LoginViewModel) {
         }
         composable(RouteNav.Home.route){
 //            HomeScreen(navHostController = navController)
-            MainPage(navController = navController)
+//            MainPage(navController = navController)
+            MainPage()
         }
         composable(RouteNav.Verify.route){
             verifyPage(navController = navController)
@@ -87,8 +88,5 @@ fun NavigationScreen(viewModel: LoginViewModel) {
         composable(RouteNav.Profile.route){
             EditProfileScreen(navController = navController)
         }
-
-
-        
     }
 }

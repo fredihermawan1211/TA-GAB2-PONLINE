@@ -2,9 +2,7 @@ package com.example.ponlineapp.dashboard
 
 
 import android.widget.Toast
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,6 +18,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Person
@@ -27,6 +26,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalContext
@@ -47,6 +47,8 @@ import com.example.ponlineapp.login.BackgroundImage
 import com.example.ponlineapp.navigation.ItineraryDay
 import com.example.ponlineapp.navigation.RouteNav
 import com.example.ponlineapp.navigation.Testdate
+import com.example.ponlineapp.profil.ProfileAppBar
+import com.example.ponlineapp.profil.ProfileImage
 
 
 //@Preview()
@@ -61,7 +63,7 @@ fun NavHostContainer(
         navController = navController,
 
         // set the start destination as home
-        startDestination = "home",
+        startDestination = "profile",
 
         // Set the padding provided by scaffold
         modifier = Modifier.padding(paddingValues = padding),
@@ -80,8 +82,8 @@ fun NavHostContainer(
 
             // route : profile
             composable("profile") {
-                Page2Screen(navController)
-//                Page2Screen()
+//                Page2Screen(navController)
+                UserPage()
             }
             composable("Login"){
 //                Loginform(navController)
@@ -425,42 +427,173 @@ fun Page1Screen(){
     }
 }
 
+@Preview()
 @Composable
-fun Page2Screen(navHostController: NavHostController) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Transparent),
-        // Parameters set to place the items in center
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        // Icon Composable
-        Icon(
-            imageVector = Icons.Default.Person,
-            contentDescription = "Profile",
-            tint = colorResource(R.color.blue_100)
-        )
-        // Text to Display the current Screen
-        Text(text = "Profile", color = Color.Black)
-        Spacer(modifier = Modifier.height(20.dp))
-        Button(
-            onClick = { navHostController.navigate(RouteNav.Login.route) },
+fun UserPage() {
+    val notification = rememberSaveable { mutableStateOf("") }
+    if (notification.value.isNotEmpty()) {
+        Toast.makeText(LocalContext.current, notification.value, Toast.LENGTH_LONG).show()
+        notification.value = ""
+    }
+
+    var name by rememberSaveable { mutableStateOf("Nama User") }
+    var email by rememberSaveable { mutableStateOf("Email User") }
+    var jabatan by rememberSaveable { mutableStateOf("Jabatan User") }
+    val ctx = LocalContext.current
+    Box {
+        BackgroundImage()
+        Column(
             modifier = Modifier
-                .height(50.dp)
-                .width(150.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red),
-            elevation = ButtonDefaults.elevation(defaultElevation = 10.dp),
-            ) {
-            Text(text = "Keluar", fontWeight = FontWeight.Bold, color = Color.White)
+//                .fillMaxHeight()
+                .verticalScroll(rememberScrollState())
+                .fillMaxHeight()
+                .padding(horizontal = 8.dp)
+        ) {
+//            Row(
+//                modifier = Modifier
+//                    .fillMaxWidth(),
+//                horizontalArrangement = Arrangement.SpaceBetween
+//            ) {
+//                ProfileAppBar(
+////                    navController = navController,
+//                    topAppBarColors = TopAppBarDefaults.smallTopAppBarColors(
+//                        containerColor = colorResource(com.google.android.material.R.color.mtrl_btn_transparent_bg_color)
+//                    ),
+//                    modifier = Modifier.fillMaxWidth())
+//            }
+
+            ProfileImage()
+            Spacer(modifier = Modifier.padding(vertical = 20.dp))
+
+            Column(modifier = Modifier.padding(8.dp,4.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,) {
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = false,
+                    readOnly = true,
+                    singleLine = true,
+                    label = { Text("Nama") },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        disabledBorderColor = Color.Black,
+                        unfocusedBorderColor = Color.Black,
+                        disabledLabelColor = Color.Black,
+                        unfocusedLabelColor = Color.Black,
+                        disabledTextColor = Color.Black
+                    )
+                )
+            }
+            Column(modifier = Modifier.padding(8.dp,4.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,) {
+                OutlinedTextField(
+                    value = email,
+                    onValueChange = { email = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = false,
+                    readOnly = true,
+                    singleLine = true,
+                    label = { Text("Email") },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        disabledBorderColor = Color.Black,
+                        unfocusedBorderColor = Color.Black,
+                        disabledLabelColor = Color.Black,
+                        unfocusedLabelColor = Color.Black,
+                        disabledTextColor = Color.Black
+                    )
+                )
+            }
+            Column(modifier = Modifier.padding(8.dp,4.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,){
+                OutlinedTextField(
+                    value = jabatan,
+                    onValueChange = { jabatan = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = false,
+                    readOnly = true,
+                    singleLine = true,
+                    label = { Text("Jabatan") },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        disabledBorderColor = Color.Black,
+                        unfocusedBorderColor = Color.Black,
+                        disabledLabelColor = Color.Black,
+                        unfocusedLabelColor = Color.Black,
+                        disabledTextColor = Color.Black
+                    )
+                )
+            }
+            Column(modifier = Modifier.padding(8.dp,12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,) {
+                Button( onClick = { Toast.makeText(ctx, "Ubah Password", Toast.LENGTH_SHORT).show()
+                },
+                    enabled = true,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 10.dp)
+                        .height(IntrinsicSize.Min),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.blue_100)),
+                    shape = RoundedCornerShape(30.dp),
+                    elevation = ButtonDefaults.elevation(defaultElevation = 8.dp)
+                ) {
+                    androidx.compose.material3.Text(
+                        text = "Ubah Password",
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                }
+
+                Button( onClick = {
+//                    navController.navigate(RouteNav.EditProfile.route)
+                },
+                    enabled = true,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 10.dp)
+                        .height(IntrinsicSize.Min),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.blue_100)),
+                    shape = RoundedCornerShape(30.dp),
+                    elevation = ButtonDefaults.elevation(defaultElevation = 8.dp)
+                ) {
+                    androidx.compose.material3.Text(
+                        text = "Ubah Profile",
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                }
+                androidx.compose.material3.Text(
+                    text = stringResource(R.string.app_version),
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Gray
+                )
+                Button( onClick = { Toast.makeText(ctx, "Logour", Toast.LENGTH_SHORT).show()
+                },
+                    enabled = true,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 30.dp)
+                        .height(IntrinsicSize.Min),
+//                        .align(Alignment.BottomCenter),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.red_66)),
+                    shape = RoundedCornerShape(30.dp),
+                    elevation = ButtonDefaults.elevation(defaultElevation = 8.dp)
+                ) {
+                    androidx.compose.material3.Text(
+                        text = "Logout",
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                }
+            }
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-//@Preview(showBackground = true)
+@Preview(showBackground = true)
 @Composable()
-fun MainPage(navController: NavHostController){
+fun MainPage(
+//    navController: NavHostController
+){
     Column(
         modifier = Modifier
             .fillMaxSize()

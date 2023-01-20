@@ -75,8 +75,7 @@ fun ProfileAppBar(navController : NavHostController,
                     }
                 }
             }
-        }
-        ,
+        },
         colors = topAppBarColors,
         modifier = modifier
     )
