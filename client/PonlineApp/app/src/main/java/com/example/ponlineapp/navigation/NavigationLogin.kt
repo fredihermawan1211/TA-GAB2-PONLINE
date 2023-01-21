@@ -5,6 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.ponlineapp.dashboard.Home
 import com.example.ponlineapp.dashboard.HomeScreen
 import com.example.ponlineapp.login.components.SplashScreen
 import com.example.ponlineapp.navigation.RouteNav
@@ -45,7 +46,7 @@ fun NavigationScreen(viewModel: LoginViewModel) {
         }
 
         composable(RouteNav.Register.route){
-            if (viewModel.isSuccessLoading.value){
+            if (viewModel.isSuccessLoadingRegister.value){
                 LaunchedEffect(key1 = Unit){
                     navController.navigate(route = RouteNav.Verify.route){
                         popUpTo(route = RouteNav.Login.route)
@@ -56,7 +57,8 @@ fun NavigationScreen(viewModel: LoginViewModel) {
                 Registerform(
                     navController = navController,
                     loadingProgressBar = loadingProgressBar,
-                    onclickRegister = viewModel::register
+                    onclickRegister = viewModel::register,
+                    imageError = imageError
                 )
             }
         }
@@ -77,6 +79,9 @@ fun NavigationScreen(viewModel: LoginViewModel) {
         }
         composable(RouteNav.SplashScreen.route){
             SplashScreen(navHostController = navController)
+//        }
+//        composable(RouteNav.Home.route){
+//            Home(navController = navController)
         }
 
 
