@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -28,6 +29,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.ponlineapp.R
+import com.example.ponlineapp.login.components.ErrorImageAuth
+import com.example.ponlineapp.login.components.ProgressBarLoading
 import com.example.ponlineapp.navigation.RouteNav
 
 
@@ -59,18 +62,17 @@ fun Logo(){
             modifier = Modifier
                 .size(180.dp)
                 .padding(top = 30.dp),
-
             )
     }
 }
 
 @Composable
-fun ForgotPassword(navController: NavHostController)
+fun ForgotPassword(navController: NavHostController,
+                   loadingProgressBar: Boolean,
+                   onclick: (email: String) -> Unit,
+                   imageError: Boolean)
 {
-    var emailforgot by remember { mutableStateOf("") }
-    val onUserNameChange = { text : String ->
-        emailforgot = text
-    }
+    var email by rememberSaveable { mutableStateOf(value = "") }
     Box{
         BackgroundImage()
         Column(modifier = Modifier
@@ -80,32 +82,31 @@ fun ForgotPassword(navController: NavHostController)
         {
             TopBarForgotPassword()
             Text(text = "Kami akan mengirimkan link ke alamat email anda untuk mengatur ulang Password.")
-
             TextField(
-                    value = emailforgot,
-                    onValueChange = { onUserNameChange(it) },
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .shadow(elevation = 15.dp),
-                    shape = RoundedCornerShape(15.dp),
-                    placeholder = { Text("Masukkan Email") },
-                    colors = TextFieldDefaults.textFieldColors
-                        (
-                        backgroundColor = Color.White,
-                        textColor = Color.Gray,
-                        //untuk menghilangkan underline
-                        disabledTextColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent
+                value = email,
+                onValueChange = { email = it},
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .shadow(elevation = 15.dp),
+                shape = RoundedCornerShape(15.dp),
+                placeholder = { Text("Masukkan Email") },
+                colors = TextFieldDefaults.textFieldColors
+                    (
+                    backgroundColor = Color.White,
+                    textColor = Color.Gray,
+                    //untuk menghilangkan underline
+                    disabledTextColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent
 
-                    ),
-                    singleLine = true
+                ),
+                singleLine = true
 
-                )
+            )
 
-            Button( onClick = { navController.navigate(RouteNav.ConfirmPassword.route + "/$emailforgot")},
+            Button( onClick = { onclick(email)},
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 10.dp),
@@ -119,41 +120,12 @@ fun ForgotPassword(navController: NavHostController)
 
         }
     }
+    ErrorImageAuth(isImageValidate = imageError)
+
+    ProgressBarLoading(isLoading = loadingProgressBar)
 }
-
-
-//@Composable
-//fun CustomTextField(
-//    title: String,
-//    textState: String,
-//    onTextChange: (String) -> Unit,
-//) {
-//
-//        TextField(
-//            value = textState,
-//            onValueChange = { onTextChange(it) },
-//            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-//            modifier = Modifier.fillMaxWidth(),
-//            shape = RoundedCornerShape(15.dp),
-//            colors = TextFieldDefaults.textFieldColors
-//                (
-//                textColor = Color.Gray,
-//                //untuk menghilangkan underline
-//                disabledTextColor = Color.Transparent,
-//                focusedIndicatorColor = Color.Transparent,
-//                unfocusedIndicatorColor = Color.Transparent,
-//                disabledIndicatorColor = Color.Transparent
-//
-//            ),
-//            singleLine = true
-//
-//        )
-//
-//}
-
-
 @Composable
-fun ConfirmPassword(navController: NavHostController, email: String?)
+fun ConfirmPassword(navController: NavHostController)
 {
     Box {
         BackgroundImage()
@@ -164,10 +136,10 @@ fun ConfirmPassword(navController: NavHostController, email: String?)
                 fontFamily = FontFamily.SansSerif,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(start = 15.dp))
-            Text(text = "Link  pengaturan ulang password telah dikirimkan ke email $email, " +
+            Text(text = "Link  pengaturan ulang password telah dikirimkan , " +
                     "silahkan cek email anda untuk melakukan pengautran ulang Password.",
                 modifier = Modifier.padding(start = 15.dp)
-                )
+            )
             Button( onClick = { navController.navigate(RouteNav.Login.route) },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -184,13 +156,6 @@ fun ConfirmPassword(navController: NavHostController, email: String?)
 
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun Testingapp(){
-    val navController = rememberNavController()
-    ForgotPassword(navController = navController)
 }
 
 

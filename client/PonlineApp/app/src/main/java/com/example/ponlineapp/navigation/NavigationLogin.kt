@@ -63,12 +63,26 @@ fun NavigationScreen(viewModel: LoginViewModel) {
             }
         }
 
-        composable(RouteNav.ForgotPassword.route) {
-            ForgotPassword(navController = navController)
+        composable(RouteNav.ForgotPassword.route){
+            if(viewModel.isSuccessLoadingForgot.value){
+                LaunchedEffect(key1 = Unit){
+                    navController.navigate(route = RouteNav.ConfirmPassword.route){
+                        popUpTo(route = RouteNav.Login.route)
+                    }
+                }
+            }
+            else{
+                ForgotPassword(
+                    navController = navController,
+                    loadingProgressBar = loadingProgressBar,
+                    onclick = viewModel::ForgotPassword,
+                    imageError = imageError
+                )
+            }
         }
-        composable(RouteNav.ConfirmPassword.route + "/{email}"){ backStackEntry ->
-            val email = backStackEntry.arguments?.getString("email")
-            ConfirmPassword(navController = navController, email)
+
+        composable(RouteNav.ConfirmPassword.route){
+            ConfirmPassword(navController = navController)
         }
         composable(RouteNav.Home.route){
 //            HomeScreen(navHostController = navController)

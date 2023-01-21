@@ -18,10 +18,12 @@ import kotlinx.coroutines.launch
 class LoginViewModel : ViewModel() {
     val isSuccessLoading = mutableStateOf(value = false)
     val isSuccessLoadingRegister = mutableStateOf(value = false)
+    val isSuccessLoadingForgot = mutableStateOf(value = false)
     val imageErrorAuth = mutableStateOf(value = false)
     val progressBar = mutableStateOf(value = false)
     private val loginRequestLiveData = MutableLiveData<Boolean>()
     private val registerRequestLiveData = MutableLiveData<Boolean>()
+    private val forgotRequestLiveData = MutableLiveData<Boolean>()
 
     fun login(email: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -88,6 +90,34 @@ class LoginViewModel : ViewModel() {
             }
         }
 
+    }
+
+    fun ForgotPassword(email: String){
+        viewModelScope.launch(Dispatchers.IO){
+            try {
+                progressBar.value = true
+                val authService = RetrofitHelper.getAuthService()
+                val responseService = authService.forgotPassword(email)
+
+                if (responseService.isSuccessful){
+                    delay(1000L)
+                    isSuccessLoadingForgot.value = true
+                    responseService.body()?.let {  forgotPassword ->
+                        Log.d("Message", "Response : ${forgotPassword}")
+                    }
+                }else {
+                    responseService.errorBody()?.let { error ->
+                        Log.d("message", "Response : $error")
+                    }
+                }
+                forgotRequestLiveData.postValue(responseService.isSuccessful)
+                progressBar.value = false
+            }catch (e: Exception) {
+                Log.d("Message", "email  Terkirim", e)
+                isSuccessLoadingForgot.value = true
+                progressBar.value = false
+            }
+        }
     }
 }
 

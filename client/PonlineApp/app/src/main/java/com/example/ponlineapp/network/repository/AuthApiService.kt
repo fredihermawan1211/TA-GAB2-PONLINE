@@ -1,12 +1,11 @@
 package com.example.ponlineapp.network.repository
 
-import com.example.ponlineapp.network.dto.LoginDto
-import com.example.ponlineapp.network.dto.Register
-import com.example.ponlineapp.network.dto.RegisterDto
-import com.example.ponlineapp.network.dto.TokenDto
+import com.example.ponlineapp.network.dto.*
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface AuthApiService {
     @POST("authentication/login")
@@ -14,5 +13,7 @@ interface AuthApiService {
 
     @POST("authentication/signup")
     suspend fun getRegister(@Body register: Register) : Response<RegisterDto>
+    @GET("authentication/forgotpassword")
+    suspend fun forgotPassword(@Query("email") email: String) : Response<ForgotDto>
 }
 
