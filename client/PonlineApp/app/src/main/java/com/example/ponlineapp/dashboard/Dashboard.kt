@@ -1,18 +1,9 @@
-@file:Suppress("OPT_IN_IS_NOT_ENABLED")
+@file:OptIn(ExperimentalMaterial3Api::class)
 
 package com.example.ponlineapp.dashboard
 
-
-import ItineraryDay
-import android.annotation.SuppressLint
-import android.os.Bundle
-import android.util.DisplayMetrics
-import android.view.WindowManager
+import Constants
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -21,10 +12,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.material.*
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -32,26 +19,23 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -102,7 +86,6 @@ fun NavHostContainer(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeAppBar(navController: NavHostController,
     topAppBarColors: TopAppBarColors,
@@ -271,8 +254,7 @@ fun Modifier.badgeLayout() =
         }
     }
 
-//@Preview(showBackground = true)
-//@Preview( showBackground = true,showSystemUi = true)
+
 @Composable
 fun HomeScreen(navHostController: NavHostController){
     Box {
@@ -382,6 +364,8 @@ fun HomeScreen(navHostController: NavHostController){
         itinerary_card()
     }
 }
+
+
 
 private val DayComparator = Comparator<ItineraryDay> { left, right ->
     left.date.compareTo(right.date)
@@ -518,6 +502,68 @@ fun MainPage(navController: NavHostController){
                     )
                 },
             )
+        }
+    }
+}
+
+@Composable
+fun itinerary_card(
+    modifier: Modifier = Modifier
+){
+    var comparator by remember { mutableStateOf(DayComparator) }
+    val context = LocalContext.current
+    val interactionSource = remember {
+        MutableInteractionSource()
+    }
+    LazyColumn(
+        Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        val sortedList = ItineraryList.sortedWith(comparator)
+        items(sortedList, key = { it.day})
+        {
+            Card(
+                elevation = CardDefaults.cardElevation(2.dp),
+//        elevation = 2.dp,
+                shape = RoundedCornerShape(10.dp),
+                colors = CardDefaults.cardColors(colorResource(id = R.color.secondary)),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(15.dp)
+            )    {
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .background(Color.Transparent),
+                ) {
+                    Text(
+                        text = "Jadwal",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Text(text = it.day +" "+ it.date +" "+ it.month,
+                            style = MaterialTheme.typography.displayMedium)
+                        IconButton(onClick = {
+                            Toast.makeText(context,"Test Toast",Toast.LENGTH_SHORT).show()
+                        },modifier = Modifier
+                            .size(40.dp, 40.dp)
+                            .clip(CircleShape)
+                            .background(Color.Black),
+                            enabled = true,
+                            interactionSource = interactionSource,) {
+
+                            Icon(imageVector = Icons.Filled.Edit,
+                                contentDescription = "Edit",
+                                tint = Color.White)
+                        }
+                    }
+                }
+            }
         }
     }
 }
