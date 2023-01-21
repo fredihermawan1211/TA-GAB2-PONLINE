@@ -1,7 +1,17 @@
+@file:Suppress("OPT_IN_IS_NOT_ENABLED")
+
 package com.example.ponlineapp.dashboard
 
 
+import ItineraryDay
+import android.annotation.SuppressLint
+import android.os.Bundle
+import android.util.DisplayMetrics
+import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,19 +32,26 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -48,11 +65,9 @@ import com.example.ponlineapp.navigation.ItineraryDay
 import com.example.ponlineapp.navigation.RouteNav
 import com.example.ponlineapp.navigation.Testdate
 
-
 //@Preview()
 @Composable
 fun NavHostContainer(
-    modifier: Modifier,
     navController: NavHostController,
     padding: PaddingValues
 ) {
@@ -83,10 +98,6 @@ fun NavHostContainer(
                 Page2Screen(navController)
 //                Page2Screen()
             }
-            composable("Login"){
-//                Loginform(navController)
-//                Loginform()
-            }
         }
     )
 }
@@ -99,7 +110,7 @@ fun HomeAppBar(navController: NavHostController,
 ){
     TopAppBar(
         title = {
-            Column() {
+            Column {
                 androidx.compose.material3.Text(
                     text = stringResource(
                         id = R.string.name
@@ -135,7 +146,6 @@ fun HomeAppBar(navController: NavHostController,
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomNavigationBar(
     navController: NavHostController,
@@ -188,10 +198,10 @@ fun BottomNavigationBar(
 
 @Preview
 @Composable
-fun itinerary_card(
+fun Itinerary_card(
     modifier: Modifier = Modifier
 ){
-    var comparator by remember { mutableStateOf(DayComparator) }
+    val comparator by remember { mutableStateOf(DayComparator) }
     val context = LocalContext.current
     val interactionSource = remember {
         MutableInteractionSource()
@@ -262,7 +272,6 @@ fun Modifier.badgeLayout() =
     }
 
 //@Preview(showBackground = true)
-@OptIn(ExperimentalFoundationApi::class)
 //@Preview( showBackground = true,showSystemUi = true)
 @Composable
 fun HomeScreen(navHostController: NavHostController){
@@ -370,6 +379,7 @@ fun HomeScreen(navHostController: NavHostController){
             }
             itinerary_card()
         }
+        itinerary_card()
     }
 }
 
@@ -495,8 +505,8 @@ fun MainPage(navController: NavHostController){
                 },
                 content = { padding ->
                     NavHostContainer(
-                        modifier = Modifier.background(Color.Transparent),
-                        navController = navController, padding = padding
+                        navController = navController,
+                        padding = padding
                     )
                 },
                 // Bottom navigation

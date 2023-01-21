@@ -30,6 +30,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.ponlineapp.R
+import com.example.ponlineapp.login.components.ErrorImageAuth
+import com.example.ponlineapp.login.components.ProgressBarLoading
 import com.example.ponlineapp.navigation.RouteNav
 import com.example.ponlineapp.viewModel.LoginViewModel
 
@@ -53,7 +55,8 @@ fun TopBarRegister(){
 fun Registerform(
     navController: NavHostController,
     loadingProgressBar: Boolean,
-    onclickRegister: (nama: String, email: String, password: String) -> Unit
+    onclickRegister: (nama: String, email: String, password: String) -> Unit,
+    imageError: Boolean
 )
 {
     var nama by remember { mutableStateOf("") }
@@ -237,6 +240,8 @@ fun Registerform(
             )
         }
     }
+    ErrorImageAuth(isImageValidate = imageError)
+    ProgressBarLoading(isLoading = loadingProgressBar)
 }
 
 // Kode Program Untuk Page Verifikasi Email

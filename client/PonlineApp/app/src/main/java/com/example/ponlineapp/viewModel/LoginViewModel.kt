@@ -16,14 +16,12 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("StaticFieldLeak")
 class LoginViewModel : ViewModel() {
-
     val isSuccessLoading = mutableStateOf(value = false)
+    val isSuccessLoadingRegister = mutableStateOf(value = false)
     val imageErrorAuth = mutableStateOf(value = false)
     val progressBar = mutableStateOf(value = false)
     private val loginRequestLiveData = MutableLiveData<Boolean>()
     private val registerRequestLiveData = MutableLiveData<Boolean>()
-
-
 
     fun login(email: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -39,7 +37,6 @@ class LoginViewModel : ViewModel() {
                     isSuccessLoading.value = true
                     responseService.body()?.let { tokenDto ->
                         Log.d("Logging", "Response Token: ${tokenDto.accessToken}")
-
                     }
 
                 } else {
@@ -70,7 +67,7 @@ class LoginViewModel : ViewModel() {
 
                 if (responseService.isSuccessful){
                     delay(1000L)
-                    isSuccessLoading.value = true
+                    isSuccessLoadingRegister.value = true
                     responseService.body()?.let {  registerDto ->
                         Log.d("verifikasi register", "Response : ${registerDto.succesVerify}")
                     }
@@ -82,7 +79,7 @@ class LoginViewModel : ViewModel() {
                         error.close()
                     }
                 }
-                loginRequestLiveData.postValue(responseService.isSuccessful)
+                registerRequestLiveData.postValue(responseService.isSuccessful)
                 progressBar.value = false
             }
             catch (e: Exception) {
@@ -92,7 +89,5 @@ class LoginViewModel : ViewModel() {
         }
 
     }
-
-
 }
 
