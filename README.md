@@ -20,16 +20,16 @@ Cek versi maven (windows :: cmd)
 ```
 3. Apache Tomcat 8.5 atau lebih tinggi
 Cek versi tomcat (windows :: cmd)
+Masuk ke direktori tomcat/lib
+Pastikan ada file catalina.jar
+lalu jalankan perintah :
 ```bash
-  Masuk ke direktori tomcat/lib
-  Pastikan ada file catalina.jar
-  lalu jalankan perintah :
   java -cp catalina.jar org.apache.catalina.util.ServerInfo
 ```
 4. Mysql direkomendasikan menggunakan versi (10.4.24-MariaDB)
 Cek versi mysql (windows :: cmd)
+Jalankan Query
 ```bash
-  Jalankan Query
   SELECT @@version;
 ```
 ### Khusus Client
@@ -65,8 +65,8 @@ Cek versi mysql (windows :: cmd)
 7. Buka browser dan akses server dengan url untuk memastikan program telah berjalan 
 ```bash
   http://localhost:8080
-  Jika Berhasil, Tampilan akan di alihkan ke halaman dokumentasi
 ```
+Jika Berhasil, Tampilan akan di alihkan ke halaman dokumentasi
 #### Server Online
 1. Untuk mengakses server online, bisa menghubungi ketua tim (fredy hermawan) untuk mendapatkan informasi IP public server yang dapat di akses secara online.
 2. note : Port tomcat yang digunakan dalam server online adalah 9999 bukan 8080.
