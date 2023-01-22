@@ -41,11 +41,11 @@ Cek versi mysql (windows :: cmd)
 1. Buka folder server di terminal
 2. Import database yang telah di sediakan di dalam folder database
 ```bash
-  server/src/main/resource/application.yml
+  server/database/datbset_ponline.sql
 ```
 3. Pastikan file credentials(application.yml) tersedia di direktori src/main/resource :
 ```bash
-  server/database/datbset_ponline.sql
+  server/src/main/resource/application.yml
 ```
 4. Ubah value properti datasource (ex. username/password database) yang ada di file credentials sesuai dengan konfigurasi perangkat
 ```bash
