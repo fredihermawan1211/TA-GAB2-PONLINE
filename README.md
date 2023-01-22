@@ -18,15 +18,15 @@ Cek versi maven (windows :: cmd)
 ```bash
   mvn --version
 ```
-3. Apache Tomcat 8.5 atau lebih tinggi
-Cek versi tomcat (windows :: cmd)
-Masuk ke direktori tomcat/lib
-Pastikan ada file catalina.jar
+3. Apache Tomcat 8.5 atau lebih tinggi<br />
+Cek versi tomcat (windows :: cmd)<br />
+Masuk ke direktori tomcat/lib<br />
+Pastikan ada file catalina.jar<br />
 lalu jalankan perintah :
 ```bash
   java -cp catalina.jar org.apache.catalina.util.ServerInfo
 ```
-4. Mysql direkomendasikan menggunakan versi (10.4.24-MariaDB)
+4. Mysql direkomendasikan menggunakan versi (10.4.24-MariaDB)<br />
 Cek versi mysql (windows :: cmd)
 Jalankan Query
 ```bash
