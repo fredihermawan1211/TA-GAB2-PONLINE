@@ -65,7 +65,7 @@ Cek versi mysql (windows :: cmd)
 ```
 #### Server Online
 1. Untuk mengakses server online, bisa menghubungi ketua tim (fredy hermawan) untuk mendapatkan informasi IP public server yang dapat di akses secara online.
-note : Port tomcat yang digunakan dalam server online adalah 9999 bukan 8080.
+2. note : Port tomcat yang digunakan dalam server online adalah 9999 bukan 8080.
 ### Client
 1. Buka project client di Android Studio.
 2. Pastikan import library telah selesai (progress bar di bawah kanan)
