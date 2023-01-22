@@ -6,6 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,6 +41,7 @@ public class KolamController {
     // enspoin untuk menyimpan data
     // anotasi untuk menandakan metode yang di gunakan adalah POST
     @PostMapping
+    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<AbstractResponse<Kolam>> create(@Valid @RequestBody KolamRequest kolamRequest, Errors errors ) {
     
         // Siapkan objek kosong untuk di kembalikan
@@ -67,6 +69,7 @@ public class KolamController {
     // buat endpoint untuk update, penjelasanya sama kaya simpan data hanya saja respon yang di terima sudah ada id objeknya
     // buat metode PUT
     @PutMapping
+    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<AbstractResponse<Kolam>> update(@Valid @RequestBody KolamRequest kolamRequest, Errors errors ) {
     
         AbstractResponse<Kolam> responseData = new AbstractResponse<>();
@@ -97,6 +100,7 @@ public class KolamController {
     // metode DELETE
     // id di baca dari url
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('OWNER')")
     public ApiResponse deleteById(@PathVariable("id") Long id) {
         ApiResponse response = new ApiResponse(false, "Data Gagal Di hapus");
         if (kolamServices.deleteById(id)) {

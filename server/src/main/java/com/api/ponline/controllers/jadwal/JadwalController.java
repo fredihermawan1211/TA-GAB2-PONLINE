@@ -6,6 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,6 +41,8 @@ public class JadwalController {
     // enspoin untuk menyimpan data
     // anotasi untuk menandakan metode yang di gunakan adalah POST
     @PostMapping
+    @PreAuthorize("hasRole('OWNER')")
+    // @PreAuthorize("hasRole('OWNER') || hasRole('PQOWNEDRETVY')")
     public ResponseEntity<AbstractResponse<Jadwal>> create(@Valid @RequestBody JadwalRequest jadwalRequest, Errors errors ) {
     
         // Siapkan objek kosong untuk di kembalikan
@@ -67,6 +70,7 @@ public class JadwalController {
     // buat endpoint untuk update, penjelasanya sama kaya simpan data hanya saja respon yang di terima sudah ada id objeknya
     // buat metode PUT
     @PutMapping
+    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<AbstractResponse<Jadwal>> update(@Valid @RequestBody JadwalRequest jadwalRequest, Errors errors ) {
     
         AbstractResponse<Jadwal> responseData = new AbstractResponse<>();
@@ -98,6 +102,7 @@ public class JadwalController {
     // metode DELETE
     // id di baca dari url
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('OWNER')")
     public ApiResponse deleteById(@PathVariable("id") Long id) {
         ApiResponse response = new ApiResponse(false, "Data Gagal Di hapus");
         if (jadwalServices.deleteById(id)) {
