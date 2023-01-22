@@ -39,26 +39,30 @@ Cek versi mysql (windows :: cmd)
 ## Menjalankan Program
 ### Server
 1. Buka folder server di terminal
-2. Pastikan file credentials(application.yml) tersedia di direktori src/main/resource :
+2. Import database yang telah di sediakan di dalam folder database
 ```bash
   server/src/main/resource/application.yml
 ```
-3. Ubah value properti datasource (ex. username/password database) yang ada di file credentials sesuai dengan konfigurasi perangkat
+3. Pastikan file credentials(application.yml) tersedia di direktori src/main/resource :
+```bash
+  server/database/datbset_ponline.sql
+```
+4. Ubah value properti datasource (ex. username/password database) yang ada di file credentials sesuai dengan konfigurasi perangkat
 ```bash
   url: jdbc:mysql://namaHost:port/namaDatabase?useSSL=(true / false)
   username: username_koneksi_mysql
   password: password_koneksi_mysql
 ```
-4. Jalankan perintah
+5. Jalankan perintah
 ```bash
   mvn spring-boot:run
 ```
-5. Pastikan di log terminal sudah sampai 
+6. Pastikan di log terminal sudah sampai 
 ```bash
   ......
   ...Completed initialization in ... ms
 ```
-5. Buka browser dan akses server dengan url untuk memastikan program telah berjalan 
+7. Buka browser dan akses server dengan url untuk memastikan program telah berjalan 
 ```bash
   http://localhost:8080
   Jika Berhasil, Tampilan akan di alihkan ke halaman dokumentasi
